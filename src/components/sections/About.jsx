@@ -9,20 +9,13 @@ const About = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
                     <div className="relative">
                         <div className="absolute inset-0 bg-gradient-to-tr from-primary-600 to-secondary-600 rounded-2xl transform rotate-3 opacity-20 blur-lg"></div>
-                        <div className="relative bg-dark-card rounded-2xl p-8 border border-white/5 hover:border-primary-500/30 transition-colors">
-                            <h3 className="text-2xl font-display font-bold text-white mb-4">Who I Am</h3>
-                            <p className="text-dark-muted mb-6">
-                                I'm a passionate developer with a keen eye for design. I bridge the gap between engineering and aesthetics, creating software that not only works flawlessly but looks incredible.
-                            </p>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="bg-dark-bg/50 p-4 rounded-lg">
-                                    <h4 className="text-primary-400 font-bold text-xl mb-1">3+</h4>
-                                    <p className="text-sm text-dark-muted">Years Exp.</p>
-                                </div>
-                                <div className="bg-dark-bg/50 p-4 rounded-lg">
-                                    <h4 className="text-secondary-400 font-bold text-xl mb-1">50+</h4>
-                                    <p className="text-sm text-dark-muted">Projects</p>
-                                </div>
+                        <div className="relative bg-dark-card rounded-2xl p-2 border border-white/5 hover:border-primary-500/30 transition-colors overflow-hidden group">
+                            <div className="aspect-[3/4] overflow-hidden rounded-xl">
+                                <img
+                                    src="/images/profile-about.png"
+                                    alt="Aufa Rafii Hadibrata"
+                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                />
                             </div>
                         </div>
                     </div>

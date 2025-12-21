@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -32,15 +33,21 @@ const Navbar = () => {
 
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex space-x-8">
-                        {navLinks.map((link) => (
-                            <a
+                        {[
+                            { name: 'Home', path: '/' },
+                            { name: 'Business', path: '/business' },
+                            { name: 'Graphic Design', path: '/graphic-design' },
+                            { name: 'Streetwear', path: '/streetwear' },
+                            { name: 'Blog', path: '/blog' }
+                        ].map((link) => (
+                            <Link
                                 key={link.name}
-                                href={link.href}
+                                to={link.path}
                                 className="text-sm font-medium text-dark-muted hover:text-white transition-colors relative group"
                             >
                                 {link.name}
                                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full" />
-                            </a>
+                            </Link>
                         ))}
                     </div>
 
@@ -66,15 +73,21 @@ const Navbar = () => {
             {isMobileMenuOpen && (
                 <div className="md:hidden absolute top-full left-0 right-0 bg-dark-bg/95 backdrop-blur-xl border-b border-white/10 p-4">
                     <div className="flex flex-col space-y-4">
-                        {navLinks.map((link) => (
-                            <a
+                        {[
+                            { name: 'Home', path: '/' },
+                            { name: 'Business', path: '/business' },
+                            { name: 'Graphic Design', path: '/graphic-design' },
+                            { name: 'Streetwear', path: '/streetwear' },
+                            { name: 'Blog', path: '/blog' }
+                        ].map((link) => (
+                            <Link
                                 key={link.name}
-                                href={link.href}
+                                to={link.path}
                                 className="text-base font-medium text-dark-muted hover:text-white transition-colors block"
                                 onClick={() => setIsMobileMenuOpen(false)}
                             >
                                 {link.name}
-                            </a>
+                            </Link>
                         ))}
                     </div>
                 </div>
