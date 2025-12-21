@@ -38,6 +38,11 @@ const Navbar = () => {
                             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full" />
                         </Link>
 
+                        <Link to="/about" className="text-sm font-medium text-dark-muted hover:text-white transition-colors relative group">
+                            About
+                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full" />
+                        </Link>
+
                         {/* Dropdown */}
                         <div className="relative group">
                             <button className="text-sm font-medium text-dark-muted hover:text-white transition-colors flex items-center">
@@ -56,7 +61,8 @@ const Navbar = () => {
                             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full" />
                         </Link>
 
-                        <a href="#contact" className="text-sm font-medium text-dark-muted hover:text-white transition-colors relative group">
+                        {/* Contact Link with logic to handle home/other pages */}
+                        <a href="/#contact" className="text-sm font-medium text-dark-muted hover:text-white transition-colors relative group">
                             Contact
                             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full" />
                         </a>
