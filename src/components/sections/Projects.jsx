@@ -33,7 +33,7 @@ const Projects = () => {
             category: "Product Design",
             description: "Optimization of Enterprise Management Systems and User Interface Design.",
             tags: ["UI/UX", "System Optimization"],
-            link: "#", // Placeholder as no dedicated page exists yet, or could link to Graphic Design
+            link: "/ui-ux",
             image: "/images/project-uiux.jpg"
         }
     ];

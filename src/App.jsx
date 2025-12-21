@@ -10,6 +10,7 @@ import GraphicDesign from './pages/GraphicDesign';
 import AboutPage from './pages/AboutPage';
 import ArticleTransformasi from './pages/blog/ArticleTransformasi';
 import ArticleCariDuit from './pages/blog/ArticleCariDuit';
+import UiUx from './pages/UiUx';
 
 // Wrapper to allow Navbar to check location if needed
 const AppContent = () => {
@@ -25,6 +26,7 @@ const AppContent = () => {
         <Route path="/streetwear" element={<Streetwear />} />
         <Route path="/business" element={<Business />} />
         <Route path="/graphic-design" element={<GraphicDesign />} />
+        <Route path="/ui-ux" element={<UiUx />} />
       </Routes>
     </div>
   );
