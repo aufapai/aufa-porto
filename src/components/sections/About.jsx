@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const About = () => {
     return (
@@ -27,6 +28,12 @@ const About = () => {
                         <p className="text-dark-muted text-lg mb-8">
                             Hi, I’m Aufa Rafii Hadibrata, a business graduate from IPB University with a strong interest in graphic design, brand development, and digital marketing. I started my journey in design and branding out of curiosity and passion, which eventually led me to explore streetwear, content strategy, and business development.
                         </p>
+
+                        <div className="mb-8">
+                            <Link to="/about" className="text-primary-400 font-bold hover:text-primary-300 transition-colors flex items-center">
+                                Read Full Bio <span className="ml-2">→</span>
+                            </Link>
+                        </div>
 
                         <div className="space-y-8">
                             <div>
