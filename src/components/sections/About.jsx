@@ -13,7 +13,7 @@ const About = () => {
                         <div className="relative bg-dark-card rounded-2xl p-2 border border-white/5 hover:border-primary-500/30 transition-colors overflow-hidden group">
                             <div className="aspect-[3/4] overflow-hidden rounded-xl">
                                 <img
-                                    src="/images/profile-about.png"
+                                    src="/images/about-portrait.png"
                                     alt="Aufa Rafii Hadibrata"
                                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                 />

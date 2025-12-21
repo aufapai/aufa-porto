@@ -6,7 +6,7 @@ const AboutPage = () => {
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <header className="text-center mb-16">
                     <div className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-primary-500/20">
-                        <img src="/images/profile-about.png" alt="Aufa Rafii Hadibrata" className="w-full h-full object-cover" />
+                        <img src="/images/about-portrait.png" alt="Aufa Rafii Hadibrata" className="w-full h-full object-cover" />
                     </div>
                     <h1 className="text-4xl font-display font-bold mb-4">
                         Aufa Rafii' <span className="text-primary-500">Hadibrata</span>

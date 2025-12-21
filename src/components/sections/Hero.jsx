@@ -58,7 +58,7 @@ const Hero = () => {
                                 <img
                                     src="/images/hero-profile.png"
                                     alt="Aufa Rafii Hadibrata"
-                                    className="h-[140%] w-auto max-w-none object-contain drop-shadow-2xl -mb-12 overflow-visible"
+                                    className="h-auto w-auto max-w-none object-contain drop-shadow-2xl -mb-12 overflow-visible "
                                 />
                             </div>
                         </div>
