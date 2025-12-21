@@ -19,8 +19,8 @@ const Hero = () => {
                         </div>
 
                         <h1 className="text-5xl md:text-7xl font-display font-bold text-white mb-6 leading-tight">
-                            Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-400">Aufa Rafii'</span> <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary-400 to-purple-400">Hadibrata</span>
+                            Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Aufa Rafii'</span> <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">Hadibrata</span>
                         </h1>
 
                         <h2 className="text-xl md:text-2xl text-white/80 font-medium mb-6">
@@ -34,7 +34,7 @@ const Hero = () => {
                         <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
                             <a
                                 href="#projects"
-                                className="px-8 py-4 bg-gradient-to-r from-primary-600 to-secondary-600 text-white rounded-full font-bold hover:shadow-lg hover:shadow-primary-600/25 transition-all transform hover:-translate-y-1"
+                                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-violet-600 text-white rounded-full font-bold hover:shadow-lg hover:shadow-blue-600/25 transition-all transform hover:-translate-y-1"
                             >
                                 View My Work
                             </a>
@@ -51,14 +51,14 @@ const Hero = () => {
                     <div className="flex-1 flex justify-center md:justify-end relative">
                         <div className="relative w-72 h-72 md:w-[450px] md:h-[450px]">
                             {/* Decorative Elements behind image */}
-                            <div className="absolute inset-0 bg-gradient-to-tr from-primary-600 to-secondary-600 rounded-full opacity-20 blur-3xl transform rotate-6"></div>
+                            <div className="absolute inset-0 bg-gradient-to-tr from-blue-600 to-violet-600 rounded-full opacity-20 blur-3xl transform rotate-6"></div>
 
                             {/* Main Image Container */}
                             <div className="relative w-full h-full z-10 flex items-end justify-center">
                                 <img
                                     src="/images/hero-profile.png"
                                     alt="Aufa Rafii Hadibrata"
-                                    className="h-[120%] w-auto max-w-none object-contain drop-shadow-2xl -mb-8 overflow-visible"
+                                    className="h-[140%] w-auto max-w-none object-contain drop-shadow-2xl -mb-12 overflow-visible"
                                 />
                             </div>
                         </div>
