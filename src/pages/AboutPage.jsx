@@ -207,6 +207,35 @@ const AboutPage = () => {
                         </div>
                     </div>
                 </div>
+
+                {/* Education */}
+                <div className="mt-16">
+                    <h2 className="text-3xl font-bold text-white mb-8 border-b border-white/10 pb-4">Education</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="bg-dark-card p-8 rounded-2xl border border-white/5 relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/10 rounded-full blur-2xl -mr-16 -mt-16 transition-all group-hover:bg-primary-600/20"></div>
+                            <h3 className="text-2xl font-bold text-white mb-2">Bachelor Degree</h3>
+                            <h4 className="text-xl text-primary-400 mb-4">IPB University</h4>
+                            <p className="text-dark-muted mb-4">Bogor, West Java, Indonesia</p>
+                            <ul className="text-sm text-dark-muted space-y-2">
+                                <li>• Focus on Business & Entrepreneurship</li>
+                                <li>• Best Student Nominee in Entrepreneurship 2018</li>
+                                <li>• Active in Student Exchange Programs (Kampus Merdeka)</li>
+                            </ul>
+                        </div>
+
+                        <div className="bg-dark-card p-8 rounded-2xl border border-white/5 relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-secondary-600/10 rounded-full blur-2xl -mr-16 -mt-16 transition-all group-hover:bg-secondary-600/20"></div>
+                            <h3 className="text-2xl font-bold text-white mb-2">Vocational High School</h3>
+                            <h4 className="text-xl text-secondary-400 mb-4">SMK (Multimedia / Business)</h4>
+                            <p className="text-dark-muted mb-4">Bogor, West Java, Indonesia</p>
+                            <ul className="text-sm text-dark-muted space-y-2">
+                                <li>• Specialized in Digital Arts & Design</li>
+                                <li>• Foundation in Programming & Web Development</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     );
