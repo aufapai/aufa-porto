@@ -1,6 +1,80 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const ContactPage = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+    });
+    const [status, setStatus] = useState({ type: '', message: '' });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setStatus({ type: '', message: '' });
+
+        try {
+            // EmailJS configuration
+            // IMPORTANT: Replace these with your actual EmailJS credentials
+            const SERVICE_ID = 'YOUR_SERVICE_ID'; // Get from EmailJS dashboard
+            const TEMPLATE_ID = 'YOUR_TEMPLATE_ID'; // Get from EmailJS dashboard  
+            const PUBLIC_KEY = 'YOUR_PUBLIC_KEY'; // Get from EmailJS dashboard
+
+            // Check if EmailJS is configured
+            if (SERVICE_ID === 'YOUR_SERVICE_ID') {
+                // Demo mode - show success without actually sending
+                await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate delay
+                setStatus({
+                    type: 'success',
+                    message: '⚠️ Demo Mode: EmailJS belum dikonfigurasi. Silakan setup EmailJS untuk mengirim email sungguhan. Lihat komentar di kode untuk instruksi.'
+                });
+                console.log('Form data:', formData);
+                setFormData({ name: '', email: '', subject: '', message: '' });
+                setIsSubmitting(false);
+                return;
+            }
+
+            // Send email using EmailJS
+            const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    service_id: SERVICE_ID,
+                    template_id: TEMPLATE_ID,
+                    user_id: PUBLIC_KEY,
+                    template_params: {
+                        from_name: formData.name,
+                        from_email: formData.email,
+                        subject: formData.subject,
+                        message: formData.message,
+                        to_email: 'aufatea1@gmail.com'
+                    }
+                })
+            });
+
+            if (response.ok) {
+                setStatus({ type: 'success', message: '✅ Pesan berhasil dikirim! Saya akan segera membalas.' });
+                setFormData({ name: '', email: '', subject: '', message: '' });
+            } else {
+                throw new Error('Gagal mengirim email');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setStatus({ type: 'error', message: '❌ Gagal mengirim pesan. Silakan coba lagi atau hubungi via WhatsApp.' });
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     return (
         <section className="pt-24 pb-12 min-h-screen bg-dark-bg text-white">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -14,10 +88,114 @@ const ContactPage = () => {
                     </p>
                 </header>
 
+                {/* Contact Form */}
+                <div className="bg-dark-card rounded-3xl p-8 border border-white/5 mb-8">
+                    <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span className="w-10 h-10 bg-primary-900/30 rounded-full flex items-center justify-center">
+                            <svg className="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                        </span>
+                        Kirim Pesan
+                    </h2>
+
+                    {status.message && (
+                        <div className={`mb-6 p-4 rounded-xl text-sm ${status.type === 'success'
+                                ? 'bg-green-500/10 border border-green-500/30 text-green-400'
+                                : 'bg-red-500/10 border border-red-500/30 text-red-400'
+                            }`}>
+                            {status.message}
+                        </div>
+                    )}
+
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label htmlFor="name" className="block text-sm font-medium text-white/70 mb-2">Nama</label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    required
+                                    placeholder="Nama lengkap Anda"
+                                    className="w-full px-4 py-3 bg-dark-bg border border-white/10 rounded-xl text-white placeholder-white/30 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-all"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="email" className="block text-sm font-medium text-white/70 mb-2">Email</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    required
+                                    placeholder="email@example.com"
+                                    className="w-full px-4 py-3 bg-dark-bg border border-white/10 rounded-xl text-white placeholder-white/30 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-all"
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label htmlFor="subject" className="block text-sm font-medium text-white/70 mb-2">Subject</label>
+                            <input
+                                type="text"
+                                id="subject"
+                                name="subject"
+                                value={formData.subject}
+                                onChange={handleChange}
+                                required
+                                placeholder="Apa yang bisa saya bantu?"
+                                className="w-full px-4 py-3 bg-dark-bg border border-white/10 rounded-xl text-white placeholder-white/30 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-all"
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="message" className="block text-sm font-medium text-white/70 mb-2">Pesan</label>
+                            <textarea
+                                id="message"
+                                name="message"
+                                value={formData.message}
+                                onChange={handleChange}
+                                required
+                                rows={5}
+                                placeholder="Ceritakan tentang project atau kebutuhan Anda..."
+                                className="w-full px-4 py-3 bg-dark-bg border border-white/10 rounded-xl text-white placeholder-white/30 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-all resize-none"
+                            />
+                        </div>
+
+                        <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="w-full py-4 bg-primary-600 hover:bg-primary-500 text-white rounded-xl font-bold text-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        >
+                            {isSubmitting ? (
+                                <>
+                                    <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                                    </svg>
+                                    Mengirim...
+                                </>
+                            ) : (
+                                <>
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                    </svg>
+                                    Kirim Pesan
+                                </>
+                            )}
+                        </button>
+                    </form>
+                </div>
+
+                {/* Quick Contact Options */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
                     {/* WhatsApp - Primary Action */}
                     <a
-                        href="https://wa.me/6281234567890" // Replace with actual number if provided, otherwise placeholder
+                        href="https://wa.me/6281234567890"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="bg-green-600/10 border border-green-500/30 p-8 rounded-2xl hover:bg-green-600/20 transition-all group flex flex-col items-center text-center cursor-pointer"
@@ -56,9 +234,15 @@ const ContactPage = () => {
                     <div className="flex flex-col md:items-end justify-center">
                         <h3 className="text-xl font-bold text-white mb-4">Socials</h3>
                         <div className="flex gap-4">
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary-600 hover:text-white transition-all text-dark-muted"><span className="sr-only">LinkedIn</span>in</a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-all text-dark-muted"><span className="sr-only">Instagram</span>ig</a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-black hover:text-white transition-all text-dark-muted"><span className="sr-only">TikTok</span>tk</a>
+                            <a href="https://www.linkedin.com/in/aufarafii/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#0A66C2] hover:text-white transition-all text-dark-muted">
+                                <span className="sr-only">LinkedIn</span>in
+                            </a>
+                            <a href="https://www.instagram.com/loekis.in/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-all text-dark-muted">
+                                <span className="sr-only">Instagram</span>ig
+                            </a>
+                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-black hover:text-white transition-all text-dark-muted">
+                                <span className="sr-only">TikTok</span>tk
+                            </a>
                         </div>
                     </div>
                 </div>
