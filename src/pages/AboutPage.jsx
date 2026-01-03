@@ -6,8 +6,27 @@ const AboutPage = () => {
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header - Profile & Bio */}
                 <header className="flex flex-col md:flex-row gap-8 items-start mb-12">
-                    <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden border-4 border-white/10 flex-shrink-0 bg-gradient-to-br from-amber-200 to-amber-100">
+                    <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden border-4 border-white/10 flex-shrink-0 bg-gradient-to-br from-amber-200 to-amber-100 group">
                         <img src="/images/about-portrait.png" alt="Aufa Rafii Hadibrata" className="w-full h-full object-cover" />
+                        {/* Easter Egg Heart - Hidden until hover */}
+                        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <button
+                                onClick={() => {
+                                    const password = prompt("🎉 Selamat! Kamu menemukan Easter Egg!\n\nBerarti kamu orang yang spesial 💕\n\nMasukkan password untuk melanjutkan:");
+                                    if (password === "ily") {
+                                        window.location.href = "/x9k2m7p4q1s8";
+                                    } else if (password !== null) {
+                                        alert("Password salah! Coba hubungi yang punya website 😊");
+                                    }
+                                }}
+                                className="bg-pink-500/80 hover:bg-pink-600 backdrop-blur-sm rounded-full p-2 transform hover:scale-110 transition-all duration-200 shadow-lg"
+                                aria-label="Easter egg"
+                            >
+                                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                     <div className="flex-1">
                         <p className="text-lg md:text-xl text-white/80 italic leading-relaxed mb-6">
@@ -189,12 +208,18 @@ const AboutPage = () => {
                         <span className="flex items-center gap-2 bg-dark-bg px-4 py-2 rounded-xl text-sm text-white/80 border border-white/10">
                             <span>📅</span> 25 years
                         </span>
-                        <span className="flex items-center gap-2 bg-dark-bg px-4 py-2 rounded-xl text-sm text-white/80 border border-white/10">
-                            <span>🌐</span> aufarafii.com
-                        </span>
-                        <span className="flex items-center gap-2 bg-dark-bg px-4 py-2 rounded-xl text-sm text-white/80 border border-white/10">
-                            <span>📞</span> +62 812-3456-7890
-                        </span>
+                        <a href="https://aufarafii.id" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-dark-bg px-4 py-2 rounded-xl text-sm text-white/80 border border-white/10 hover:border-primary-400 transition-colors">
+                            <span>🌐</span> aufarafii.id
+                        </a>
+                        <a href="mailto:me@aufarafii.id" className="flex items-center gap-2 bg-dark-bg px-4 py-2 rounded-xl text-sm text-white/80 border border-white/10 hover:border-primary-400 transition-colors">
+                            <span>✉️</span> me@aufarafii.id
+                        </a>
+                        <a href="mailto:aufatea1@gmail.com" className="flex items-center gap-2 bg-dark-bg px-4 py-2 rounded-xl text-sm text-white/80 border border-white/10 hover:border-primary-400 transition-colors">
+                            <span>📧</span> aufatea1@gmail.com
+                        </a>
+                        <a href="https://wa.me/6287770050793?text=Hallo%20kak%20Aufa%20salam%20kenal%20aku%20dari%20" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-green-600 px-4 py-2 rounded-xl text-sm text-white hover:bg-green-700 transition-colors">
+                            <span>📱</span> +6287770050793
+                        </a>
                         <span className="flex items-center gap-2 bg-dark-bg px-4 py-2 rounded-xl text-sm text-white/80 border border-white/10">
                             <span>🇮🇩</span> Indonesia
                         </span>

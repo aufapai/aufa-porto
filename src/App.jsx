@@ -13,6 +13,7 @@ import ArticleCariDuit from './pages/blog/ArticleCariDuit';
 import DigitalMarketing from './pages/DigitalMarketing';
 import UiUx from './pages/UiUx';
 import ContactPage from './pages/ContactPage';
+import X9k2m7p4q1s8 from './pages/x9k2m7p4q1s8';
 
 // Wrapper to allow Navbar to check location if needed
 const AppContent = () => {
@@ -31,6 +32,8 @@ const AppContent = () => {
         <Route path="/graphic-design" element={<GraphicDesign />} />
         <Route path="/digital-marketing" element={<DigitalMarketing />} />
         <Route path="/ui-ux" element={<UiUx />} />
+        {/* Hidden Easter Egg Route - Not indexed by Google */}
+        <Route path="/x9k2m7p4q1s8" element={<X9k2m7p4q1s8 />} />
       </Routes>
     </div>
   );
