@@ -189,10 +189,10 @@ const AboutPage = () => {
                 <div className="bg-dark-card rounded-2xl p-4 border border-white/5 mb-8">
                     <div className="flex flex-wrap items-center gap-3">
                         <span className="text-sm font-bold text-white/60 px-2">Portfolio</span>
-                        <a href="https://www.linkedin.com/in/aufarafii/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#0A66C2] px-4 py-2 rounded-xl text-sm text-white hover:opacity-80 transition-opacity">
+                        <a href="https://www.linkedin.com/in/aufa-hadibrata/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#0A66C2] px-4 py-2 rounded-xl text-sm text-white hover:opacity-80 transition-opacity">
                             <span>in</span> LinkedIn
                         </a>
-                        <a href="https://www.instagram.com/loekis.in/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-gradient-to-r from-[#833AB4] via-[#E1306C] to-[#F77737] px-4 py-2 rounded-xl text-sm text-white hover:opacity-80 transition-opacity">
+                        <a href="https://www.instagram.com/aufapai/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-gradient-to-r from-[#833AB4] via-[#E1306C] to-[#F77737] px-4 py-2 rounded-xl text-sm text-white hover:opacity-80 transition-opacity">
                             <span>📷</span> Instagram
                         </a>
                         <a href="https://www.tokopedia.com/zerocostshop" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#5CBA47] px-4 py-2 rounded-xl text-sm text-white hover:opacity-80 transition-opacity">
