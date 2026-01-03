@@ -13,7 +13,7 @@ const AboutPage = () => {
                             <button
                                 onClick={() => {
                                     const password = prompt("🎉 Selamat! Kamu menemukan Easter Egg!\n\nBerarti kamu orang yang spesial 💕\n\nMasukkan password untuk melanjutkan:");
-                                    if (password === "ily") {
+                                    if (password === "ilypai") {
                                         window.location.href = "/x9k2m7p4q1s8";
                                     } else if (password !== null) {
                                         alert("Password salah! Coba hubungi yang punya website 😊");
