@@ -2,6 +2,9 @@
   RewriteEngine On
   RewriteBase /
   
+  # Don't rewrite admin PHP files
+  RewriteRule ^admin/ - [L]
+
   # Redirect all requests to index.html for React Router
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f

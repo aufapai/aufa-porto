@@ -4,16 +4,6 @@ const Streetwear = () => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [visibleItems, setVisibleItems] = useState(16);
 
-    const catalogImages = Array.from({ length: 33 }, (_, i) => ({
-        // Using placeholder for now, ideally these should be real paths
-        // We will default to a placeholder service or the user's provided structure
-        url: `https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEirwk4eIbzn6yFkDtLzHFRRWP7Be0qHyxSwJPVgEhNEuLTO03tRS0_J2vdodUKBJfLFtF6vLOoEs2ZwM6PH6ZnA08nXUt52OiHRfncw5hyTcPUCorw_70SyWzXKDVT7ocE1j7OqoFj6He8lZdSp2r-x-5gunp2zY9aCntRA67KMpr87NMvsxL8qxlO2bdE/s320/ezgif.com-video-to-webp-converter.webp`,
-        // Note: I'm using one URL for demo, in real implementation I would map the specific URLs provided
-        // or cleaner: use a function to pick from the user's provided list if available.
-        // For this demo, I'll use a mix of the user's provided URLs.
-        alt: `Streetwear Design ${i + 1}`
-    }));
-
     // Recreating the specific list from the user's request for accuracy
     const specificImages = [
         "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEirwk4eIbzn6yFkDtLzHFRRWP7Be0qHyxSwJPVgEhNEuLTO03tRS0_J2vdodUKBJfLFtF6vLOoEs2ZwM6PH6ZnA08nXUt52OiHRfncw5hyTcPUCorw_70SyWzXKDVT7ocE1j7OqoFj6He8lZdSp2r-x-5gunp2zY9aCntRA67KMpr87NMvsxL8qxlO2bdE/s320/ezgif.com-video-to-webp-converter.webp",

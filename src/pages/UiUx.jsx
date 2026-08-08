@@ -1,102 +1,100 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { portfolioStore } from '../utils/adminStore';
 
 const UiUx = () => {
+    const [projects, setProjects] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
+    const ITEMS_PER_PAGE = 6;
+
+    useEffect(() => {
+        const load = async () => {
+            const data = await portfolioStore.getByCategory('ui-ux');
+            setProjects(data || []);
+            setLoading(false);
+        };
+        load();
+    }, []);
+
+    const totalPages = Math.ceil(projects.length / ITEMS_PER_PAGE);
+    const currentProjects = projects.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
+
     return (
         <section className="pt-24 pb-12 min-h-screen bg-dark-bg text-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <header className="text-center mb-16">
-                    <span className="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-xs font-bold uppercase tracking-wider mb-4 inline-block">Product Design</span>
-                    <h1 className="text-4xl md:text-6xl font-display font-bold mb-6 leading-tight">
-                        UI/UX & Enterprise <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">Systems</span>
+                    <h1 className="text-4xl md:text-6xl font-display font-bold mb-6">
+                        UI/UX <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Design</span>
                     </h1>
-                    <p className="text-xl text-dark-muted max-w-3xl mx-auto">
-                        Optimizing complex business workflows through intuitive design and data-driven dashboards.
+                    <p className="text-xl text-dark-muted max-w-2xl mx-auto">
+                        Crafting intuitive, accessible, and high-performing digital experiences.
                     </p>
                 </header>
 
-                <div className="space-y-24">
-                    {/* Project 1: Bayarkilat Hub */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                        <div className="rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/20 border border-white/10 group">
-                            <img
-                                src="/images/project-bayarkilat.png"
-                                alt="Bayarkilat Hub Dashboard"
-                                className="w-full h-auto transform transition-transform duration-700 group-hover:scale-105"
-                            />
+                {loading ? (
+                    <div className="text-center py-20 text-white/40">Loading projects...</div>
+                ) : (
+                    <>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {currentProjects.map((item) => (
+                                <Link 
+                                    key={item.id} 
+                                    to={`/portfolio/${item.id}`}
+                                    className="group relative h-96 bg-dark-card rounded-2xl overflow-hidden border border-white/5 hover:border-cyan-500/50 transition-all block"
+                                >
+                                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/70 to-transparent z-10"></div>
+                                    {item.image_url ? (
+                                        <img 
+                                            src={item.image_url} 
+                                            alt={item.title} 
+                                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                        />
+                                    ) : (
+                                        <div className="absolute inset-0 flex items-center justify-center bg-[#1a1a2e]">
+                                            <div className="w-48 h-32 bg-white/5 rounded-t-xl border border-white/10 shadow-2xl relative translate-y-8 group-hover:translate-y-4 transition-transform duration-500 flex items-center justify-center p-4">
+                                                <span className="text-xs text-white/30 text-center font-mono">App Interface<br/>Mockup</span>
+                                            </div>
+                                        </div>
+                                    )}
+                                    <div className="absolute inset-0 flex flex-col justify-end p-6 z-20">
+                                        <div className="w-10 h-10 bg-cyan-500/20 backdrop-blur-md rounded-xl mb-4 flex items-center justify-center text-cyan-400 text-lg group-hover:scale-110 transition-transform">
+                                            💻
+                                        </div>
+                                        <h3 className="text-white font-bold text-xl mb-2 group-hover:text-cyan-400 transition-colors">{item.title}</h3>
+                                        <p className="text-sm text-gray-300 line-clamp-3">{item.description}</p>
+                                    </div>
+                                </Link>
+                            ))}
                         </div>
-                        <div>
-                            <h2 className="text-3xl font-bold text-white mb-4">BayarKilat Hub: Integrated Performance Report</h2>
-                            <p className="text-dark-muted mb-6 leading-relaxed">
-                                A comprehensive dashboard designed for Digital Strategists to monitor merchant sales snapshots and social media performance in real-time.
-                            </p>
 
-                            <div className="space-y-4 mb-8">
-                                <div className="flex items-start">
-                                    <div className="flex-shrink-0 w-6 h-6 mt-1 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">✓</div>
-                                    <div className="ml-4">
-                                        <h4 className="font-bold text-white">Merchant Sales Snapshot</h4>
-                                        <p className="text-sm text-dark-muted">Visualizing top-performing merchants (Onlyfans, ChatGPT, Suno AI) with clear bar charts for quick comparison.</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-start">
-                                    <div className="flex-shrink-0 w-6 h-6 mt-1 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">✓</div>
-                                    <div className="ml-4">
-                                        <h4 className="font-bold text-white">Multi-Channel Analytics</h4>
-                                        <p className="text-sm text-dark-muted">Consolidated metrics for YouTube, Meta (IG/FB), and TikTok, tracking reach, views, and growth percentages.</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-start">
-                                    <div className="flex-shrink-0 w-6 h-6 mt-1 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400">✓</div>
-                                    <div className="ml-4">
-                                        <h4 className="font-bold text-white">AI Analysis Integration</h4>
-                                        <p className="text-sm text-dark-muted">One-click "Buat Analisis AI" feature to generate strategic insights based on the visual data.</p>
-                                    </div>
-                                </div>
+                        {projects.length === 0 && (
+                            <div className="text-center py-20 bg-dark-card rounded-2xl border border-white/5 border-dashed text-white/40">
+                                Belum ada proyek di kategori ini.
                             </div>
-                        </div>
-                    </div>
+                        )}
 
-                    {/* Project 2: Tautly / Content Strategy */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center lg:flex-row-reverse">
-                        <div className="order-1 lg:order-2 rounded-2xl overflow-hidden shadow-2xl shadow-blue-900/20 border border-white/10 group">
-                            <img
-                                src="/images/project-tautly.png"
-                                alt="Content Strategy Dashboard"
-                                className="w-full h-auto transform transition-transform duration-700 group-hover:scale-105"
-                            />
-                        </div>
-                        <div className="order-2 lg:order-1">
-                            <h2 className="text-3xl font-bold text-white mb-4">Content Strategy Automation Dashboard</h2>
-                            <p className="text-dark-muted mb-6 leading-relaxed">
-                                An operational tool for content managers to plan, generate, and sync social media content seamlessly across platforms.
-                            </p>
-
-                            <div className="space-y-4 mb-8">
-                                <div className="flex items-start">
-                                    <div className="flex-shrink-0 w-6 h-6 mt-1 rounded-full bg-yellow-500/20 flex items-center justify-center text-yellow-400">✓</div>
-                                    <div className="ml-4">
-                                        <h4 className="font-bold text-white">Daily Task Focus</h4>
-                                        <p className="text-sm text-dark-muted">High-contrast "Hari Ini" cards highlighting immediate content tasks like "4 Produk Digital yang Laris".</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-start">
-                                    <div className="flex-shrink-0 w-6 h-6 mt-1 rounded-full bg-violet-500/20 flex items-center justify-center text-violet-400">✓</div>
-                                    <div className="ml-4">
-                                        <h4 className="font-bold text-white">AI Content Generator</h4>
-                                        <p className="text-sm text-dark-muted">Built-in tools to generate detailed plans with Captions, Visual Briefs, and CTAs automatically.</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-start">
-                                    <div className="flex-shrink-0 w-6 h-6 mt-1 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-400">✓</div>
-                                    <div className="ml-4">
-                                        <h4 className="font-bold text-white">Workflow Efficiency</h4>
-                                        <p className="text-sm text-dark-muted">Quick actions to Sync, Export, or View Calendar, streamlining the content production lifecycle.</p>
-                                    </div>
-                                </div>
+                        {totalPages > 1 && (
+                            <div className="flex justify-center items-center mt-12 gap-4">
+                                <button 
+                                    onClick={() => setPage(p => Math.max(1, p - 1))}
+                                    disabled={page === 1}
+                                    className="px-6 py-2 rounded-xl bg-white/5 text-white/60 hover:text-white hover:bg-white/10 transition-all disabled:opacity-30"
+                                >
+                                    Previous
+                                </button>
+                                <span className="text-white/60 text-sm">Page {page} of {totalPages}</span>
+                                <button 
+                                    onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                                    disabled={page === totalPages}
+                                    className="px-6 py-2 rounded-xl bg-white/5 text-white/60 hover:text-white hover:bg-white/10 transition-all disabled:opacity-30"
+                                >
+                                    Next
+                                </button>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        )}
+                    </>
+                )}
             </div>
         </section>
     );

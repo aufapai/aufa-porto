@@ -1,7 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { aboutStore } from '../../utils/adminStore';
 
 const About = () => {
+    const [aboutData, setAboutData] = useState({ name: 'Aufa Rafii Hadibrata', bio: '', skills: [] });
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const load = async () => {
+            const data = await aboutStore.get();
+            if (data && data.name) {
+                setAboutData(data);
+            } else {
+                setAboutData({
+                    name: 'Aufa Rafii Hadibrata',
+                    bio: 'Hi, I’m Aufa Rafii Hadibrata, a business graduate from IPB University with a strong interest in graphic design, brand development, and digital marketing. I started my journey in design and branding out of curiosity and passion, which eventually led me to explore streetwear, content strategy, and business development.',
+                    skills: ['Strategic Planning', 'Content Management', 'Facebook for Business', 'Digital Marketing', 'Graphic Design', 'Brand Development', 'Performance Marketing']
+                });
+            }
+            setLoading(false);
+        };
+        load();
+    }, []);
+
     return (
         <section id="about" className="py-24 bg-dark-bg relative overflow-hidden">
             <div className="absolute top-1/2 right-0 w-96 h-96 bg-primary-500/10 rounded-full mix-blend-screen filter blur-[100px]" />
@@ -14,7 +35,7 @@ const About = () => {
                             <div className="aspect-[3/4] overflow-hidden rounded-xl">
                                 <img
                                     src="/images/about-portrait.png"
-                                    alt="Aufa Rafii Hadibrata"
+                                    alt={aboutData.name}
                                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                 />
                             </div>
@@ -25,27 +46,36 @@ const About = () => {
                         <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-6">
                             About <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-400">Me</span>
                         </h2>
-                        <p className="text-dark-muted text-lg mb-8">
-                            Hi, I’m Aufa Rafii Hadibrata, a business graduate from IPB University with a strong interest in graphic design, brand development, and digital marketing. I started my journey in design and branding out of curiosity and passion, which eventually led me to explore streetwear, content strategy, and business development.
-                        </p>
+                        {!loading && (
+                            <p className="text-dark-muted text-lg mb-8 whitespace-pre-wrap">
+                                {aboutData.bio}
+                            </p>
+                        )}
 
-                        <div className="mb-8">
+                        <div className="mb-8 items-center gap-4 flex flex-wrap">
                             <Link to="/about" className="text-primary-400 font-bold hover:text-primary-300 transition-colors flex items-center">
                                 Read Full Bio <span className="ml-2">→</span>
                             </Link>
+                            {aboutData.social?.email && (
+                                <a href={`mailto:${aboutData.social.email}`} className="text-white/60 hover:text-white transition-colors flex items-center gap-2 text-sm bg-white/5 px-3 py-1.5 rounded-lg border border-white/10">
+                                    <span>✉️</span> Email Me
+                                </a>
+                            )}
                         </div>
 
                         <div className="space-y-8">
-                            <div>
-                                <h3 className="text-xl font-display font-bold text-white mb-4">Skills</h3>
-                                <div className="flex flex-wrap gap-2">
-                                    {['Strategic Planning', 'Content Management', 'Facebook for Business', 'Digital Marketing', 'Graphic Design', 'Brand Development', 'Performance Marketing'].map((skill) => (
-                                        <span key={skill} className="px-3 py-1 bg-dark-bg border border-white/10 rounded-full text-sm text-primary-400">
-                                            {skill}
-                                        </span>
-                                    ))}
+                            {!loading && aboutData.skills && aboutData.skills.length > 0 && (
+                                <div>
+                                    <h3 className="text-xl font-display font-bold text-white mb-4">Skills & Interests</h3>
+                                    <div className="flex flex-wrap gap-2">
+                                        {aboutData.skills.map((skill) => (
+                                            <span key={skill} className="px-3 py-1 bg-dark-bg border border-white/10 rounded-full text-sm text-primary-400">
+                                                {skill}
+                                            </span>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
 
                             <div>
                                 <h3 className="text-xl font-display font-bold text-white mb-4">Experience</h3>

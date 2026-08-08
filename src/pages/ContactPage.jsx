@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { messageStore } from '../utils/adminStore';
 
 const ContactPage = () => {
     const [formData, setFormData] = useState({
@@ -21,51 +22,14 @@ const ContactPage = () => {
         setStatus({ type: '', message: '' });
 
         try {
-            // EmailJS configuration
-            // IMPORTANT: Replace these with your actual EmailJS credentials
-            const SERVICE_ID = 'YOUR_SERVICE_ID'; // Get from EmailJS dashboard
-            const TEMPLATE_ID = 'YOUR_TEMPLATE_ID'; // Get from EmailJS dashboard  
-            const PUBLIC_KEY = 'YOUR_PUBLIC_KEY'; // Get from EmailJS dashboard
-
-            // Check if EmailJS is configured
-            if (SERVICE_ID === 'YOUR_SERVICE_ID') {
-                // Demo mode - show success without actually sending
-                await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate delay
-                setStatus({
-                    type: 'success',
-                    message: '⚠️ Demo Mode: EmailJS belum dikonfigurasi. Silakan setup EmailJS untuk mengirim email sungguhan. Lihat komentar di kode untuk instruksi.'
-                });
-                console.log('Form data:', formData);
-                setFormData({ name: '', email: '', subject: '', message: '' });
-                setIsSubmitting(false);
-                return;
-            }
-
-            // Send email using EmailJS
-            const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    service_id: SERVICE_ID,
-                    template_id: TEMPLATE_ID,
-                    user_id: PUBLIC_KEY,
-                    template_params: {
-                        from_name: formData.name,
-                        from_email: formData.email,
-                        subject: formData.subject,
-                        message: formData.message,
-                        to_email: 'aufatea1@gmail.com'
-                    }
-                })
-            });
-
-            if (response.ok) {
-                setStatus({ type: 'success', message: '✅ Pesan berhasil dikirim! Saya akan segera membalas.' });
+            // Send email and save to DB via PHP API
+            const result = await messageStore.send(formData);
+            
+            if (result.success) {
+                setStatus({ type: 'success', message: '✅ Pesan berhasil dikembangkan! Saya akan segera membalas.' });
                 setFormData({ name: '', email: '', subject: '', message: '' });
             } else {
-                throw new Error('Gagal mengirim email');
+                throw new Error(result.error || 'Gagal mengirim pesan');
             }
         } catch (error) {
             console.error('Error:', error);

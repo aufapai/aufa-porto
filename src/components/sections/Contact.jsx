@@ -1,6 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { messageStore } from '../../utils/adminStore';
 
 const Contact = () => {
+    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+    const [status, setStatus] = useState('idle'); // 'idle', 'submitting', 'success', 'error'
+    const [errorMsg, setErrorMsg] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        if (!formData.name || !formData.email || !formData.message) {
+            setStatus('error');
+            setErrorMsg('Harap isi semua kolom');
+            return;
+        }
+
+        setStatus('submitting');
+        
+        try {
+            const res = await messageStore.send(formData);
+            if (res.success || res.status === 'success') {
+                setStatus('success');
+                setFormData({ name: '', email: '', message: '' });
+                setTimeout(() => setStatus('idle'), 5000);
+            } else {
+                setStatus('error');
+                setErrorMsg(res.error || 'Gagal mengirim pesan. Coba lagi nanti.');
+            }
+        } catch {
+            setStatus('error');
+            setErrorMsg('Terjadi kesalahan koneksi.');
+        }
+    };
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.id]: e.target.value });
+    };
+
     return (
         <section id="contact" className="py-24 bg-dark-bg relative overflow-hidden">
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-primary-500/10 rounded-full mix-blend-screen filter blur-[120px]" />
@@ -17,15 +53,33 @@ const Contact = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                     {/* Contact Form */}
-                    <div className="bg-dark-card p-8 rounded-2xl border border-white/5">
-                        <form className="space-y-6">
+                    <div className="bg-dark-card p-8 rounded-2xl border border-white/5 relative">
+                        {status === 'success' && (
+                            <div className="absolute inset-0 z-20 bg-dark-card/90 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center text-center p-6 border border-green-500/30">
+                                <div className="w-16 h-16 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center text-3xl mb-4">
+                                    ✓
+                                </div>
+                                <h3 className="text-2xl font-bold text-white mb-2">Pesan Terkirim!</h3>
+                                <p className="text-dark-muted">Terima kasih telah menghubungi saya. Saya akan segera membalas email Anda.</p>
+                                <button onClick={() => setStatus('idle')} className="mt-6 px-6 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-white transition-colors">Kirim Pesan Lain</button>
+                            </div>
+                        )}
+                        <form className="space-y-6" onSubmit={handleSubmit}>
+                            {status === 'error' && (
+                                <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
+                                    {errorMsg}
+                                </div>
+                            )}
                             <div>
                                 <label htmlFor="name" className="block text-sm font-medium text-dark-muted mb-2">Name</label>
                                 <input
                                     type="text"
                                     id="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
                                     className="w-full bg-dark-bg border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-colors"
                                     placeholder="Your Name"
+                                    disabled={status === 'submitting'}
                                 />
                             </div>
                             <div>
@@ -33,8 +87,11 @@ const Contact = () => {
                                 <input
                                     type="email"
                                     id="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
                                     className="w-full bg-dark-bg border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-colors"
                                     placeholder="your@email.com"
+                                    disabled={status === 'submitting'}
                                 />
                             </div>
                             <div>
@@ -42,15 +99,19 @@ const Contact = () => {
                                 <textarea
                                     id="message"
                                     rows="4"
+                                    value={formData.message}
+                                    onChange={handleChange}
                                     className="w-full bg-dark-bg border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-colors resize-none"
                                     placeholder="Tell me about your project..."
+                                    disabled={status === 'submitting'}
                                 ></textarea>
                             </div>
                             <button
                                 type="submit"
-                                className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold py-4 rounded-lg hover:shadow-lg hover:shadow-primary-500/25 transition-all transform hover:-translate-y-1"
+                                disabled={status === 'submitting'}
+                                className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold py-4 rounded-lg hover:shadow-lg hover:shadow-primary-500/25 transition-all transform hover:-translate-y-1 disabled:opacity-70 disabled:hover:translate-y-0"
                             >
-                                Send Message
+                                {status === 'submitting' ? 'Sending...' : 'Send Message'}
                             </button>
                         </form>
                     </div>

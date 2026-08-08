@@ -29,131 +29,129 @@ const X9k2m7p4q1s8 = () => {
                     {/* Main Content - Single Scrolling Page */}
                     <div className="space-y-8">
 
-                        {/* 1. PROFILE - FIRST! */}
+                        {/* 1. PROFILE */}
                         <div className="bg-white/5 backdrop-blur-lg rounded-3xl p-8 border border-white/10 shadow-2xl">
                             <h2 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">
-                                🎨 Aufa Rafii H - Profile
+                                🎨 CV Personal – Aufa Rafii Hadibrata
                             </h2>
 
+                            {/* Profil Singkat */}
                             <div className="bg-gradient-to-br from-blue-100 to-cyan-100 rounded-2xl p-6 border-2 border-blue-800 mb-6">
-                                <h3 className="text-3xl font-bold text-blue-900 mb-2">AUFA RAFII H</h3>
-                                <p className="text-xl text-blue-800 mb-4">INTP - KOLÉBIS MELANKOLIS</p>
+                                <h3 className="text-3xl font-bold text-blue-900 mb-2">AUFA RAFII HADIBRATA</h3>
+                                <p className="text-xl text-blue-800 mb-4">INTP (Koleris – Melankolis)</p>
                                 <div className="text-sm text-blue-900 space-y-1 mb-4">
                                     <p>Panggilan: Aufa, Pai, Fi, Rafi</p>
-                                    <p>HBDuart: 1 Jan 2000 (25 Tahun gak usah ngitung)</p>
-                                    <p>Profesi: Self-Employed Ngaku Punya Bisnis</p>
-                                    <p>Domisili: Bogor Indonesia</p>
-                                    <p>TBBÉK: +123 55 15</p>
+                                    <p>Tanggal Lahir: 1 Januari 2000</p>
+                                    <p>Domisili: Bogor, Indonesia</p>
+                                    <p>Tinggi/Berat: 173 cm / 55 kg</p>
                                 </div>
                                 <p className="text-sm text-blue-900 italic">
-                                    Creative entrepreneur yang hidupnya nggak jauh dari desain, streetwear, dan tren digital. Punya pengalaman 6 tahun sebagai graphic designer dan suka eksplorasi gaya unik buat brand atau project pribadi. Kalau lagi gatau pengen bikin brand tau project pribadi, kita bakal nyambung!
+                                    Creative entrepreneur yang fokus di desain, streetwear, dan tren digital. Memiliki pengalaman lebih dari 6 tahun sebagai graphic designer, dengan ketertarikan pada eksplorasi gaya unik untuk brand maupun project pribadi. Nyaman berdiskusi soal industri kreatif, desain, dan tren digital. Cenderung berpikir dalam, analitis, dan suka membangun sesuatu yang punya value jangka panjang.
                                 </p>
+                            </div>
+
+                            {/* Karakter Personal */}
+                            <div className="bg-indigo-100 rounded-2xl p-4 border-2 border-indigo-800 mb-4">
+                                <h3 className="text-xl font-bold text-indigo-900 mb-3">KARAKTER PERSONAL</h3>
+                                <ul className="text-sm text-indigo-900 space-y-1">
+                                    <li>• Terlihat santai, tapi serius kalau sudah masuk topik yang dalam</li>
+                                    <li>• Lebih suka deep talk daripada small talk</li>
+                                    <li>• Introvert, tapi tetap bisa bersosialisasi secara selektif</li>
+                                    <li>• Cenderung logis, namun tetap punya empati (walau tidak selalu diekspresikan secara verbal)</li>
+                                </ul>
                             </div>
 
                             <div className="grid md:grid-cols-2 gap-4 mb-4">
                                 <div className="bg-amber-100 rounded-2xl p-4 border-2 border-amber-800">
-                                    <h3 className="text-xl font-bold text-amber-900 mb-3">INTEREST GW</h3>
+                                    <h3 className="text-xl font-bold text-amber-900 mb-3">MINAT & KETERTARIKAN</h3>
                                     <ul className="text-sm text-amber-900 space-y-1">
                                         <li>• Creative Entrepreneurship</li>
                                         <li>• Gaming & Pop Culture</li>
                                         <li>• Trend Analysis & Digital Marketing</li>
-                                        <li>• Podcast & Deep Talks</li>
-                                        <li>• Foodie & Jajan Makanan</li>
+                                        <li>• Podcast & Deep Conversation</li>
+                                        <li>• Kuliner</li>
                                         <li>• Blockchain & Web3 Art</li>
-                                        <li>• Philosophy and Deep Thinker</li>
+                                        <li>• Filosofi & Pemikiran Mendalam</li>
                                     </ul>
                                 </div>
                                 <div className="bg-amber-100 rounded-2xl p-4 border-2 border-amber-800">
-                                    <h3 className="text-xl font-bold text-amber-900 mb-3">PENGALAMAN</h3>
+                                    <h3 className="text-xl font-bold text-amber-900 mb-3">PENGALAMAN RELASI</h3>
                                     <ul className="text-sm text-amber-900 space-y-1">
-                                        <li>• Officialy Pacaran Baru 1 Kali</li>
-                                        <li>• HTS beberapa Kali</li>
-                                        <li>• Sering tidak confess padahal saling suka</li>
-                                        <li>• sering terjebak di friendzone</li>
+                                        <li>• Pernah pacaran 1 kali</li>
+                                        <li>• Beberapa kali berada di fase HTS</li>
+                                        <li>• Cenderung tidak confess walau ada perasaan</li>
+                                        <li>• Sering terjebak di friendzone</li>
                                     </ul>
                                 </div>
                             </div>
 
                             <div className="grid md:grid-cols-2 gap-4 mb-4">
                                 <div className="bg-green-100 rounded-2xl p-4 border-2 border-green-800">
-                                    <h3 className="text-xl font-bold text-green-900 mb-3">PLUS-NYA GW</h3>
+                                    <h3 className="text-xl font-bold text-green-900 mb-3">KELEBIHAN</h3>
                                     <ul className="text-sm text-green-900 space-y-1">
-                                        <li>• Kreatif & Punya Selera Unik</li>
-                                        <li>• Paham Business & Trend Analysis</li>
-                                        <li>• Mengenangkan & Open-minded</li>
-                                        <li>• Independent & Proaktif</li>
-                                        <li>• Punya Visi Jangka Panjang</li>
-                                        <li>• Misterius tapi asik</li>
-                                        <li>• Suka Nulis puisi dan musik</li>
-                                        <li>• Siap diajak belajar bareeng</li>
+                                        <li>• Kreatif dan memiliki selera unik</li>
+                                        <li>• Paham business & trend analysis</li>
+                                        <li>• Open-minded dan menyenangkan diajak diskusi</li>
+                                        <li>• Mandiri dan produktif</li>
+                                        <li>• Memiliki visi jangka panjang</li>
+                                        <li>• Suka menulis (puisi/musik)</li>
+                                        <li>• Bisa jadi partner belajar dan berkembang</li>
                                     </ul>
                                 </div>
                                 <div className="bg-red-100 rounded-2xl p-4 border-2 border-red-800">
-                                    <h3 className="text-xl font-bold text-red-900 mb-3">MINUS-NYA GW</h3>
+                                    <h3 className="text-xl font-bold text-red-900 mb-3">KEKURANGAN</h3>
                                     <ul className="text-sm text-red-900 space-y-1">
-                                        <li>• Sering Tergagalan di Puncaknya (Workaholic)</li>
-                                        <li>• Perfeksionis di Beberapa Hal</li>
-                                        <li>• Lebih Suka Deep Talk Dibanding Small Talk</li>
-                                        <li>• Nggak Gelalu Suka Keramaian</li>
-                                        <li>• kurang suka ngomcorng di luar</li>
-                                        <li>• Cenderung dingin gak romantis</li>
-                                        <li>• males menangapi kalau tidak dilikin BT</li>
-                                        <li>• Tapingnya gak banget sering TYPO</li>
-                                        <li>• Tidak konsisten dan hilang fokus</li>
-                                        <li>• Kadang Terlalu Ngasal</li>
-                                        <li>• KEBAHAN NUMBER ONE</li>
-                                        <li>• Kadang terlihat cuek padahal paling perhatian</li>
+                                        <li>• Cenderung terlalu tenggelam dalam pekerjaan (workaholic)</li>
+                                        <li>• Perfeksionis di beberapa aspek</li>
+                                        <li>• Kurang suka keramaian / nongkrong</li>
+                                        <li>• Kadang terlihat dingin atau kurang romantis</li>
+                                        <li>• Mudah kehilangan fokus</li>
+                                        <li>• Mood-based (kalau sudah bad mood, cenderung menarik diri)</li>
+                                        <li>• Komunikasi kadang tidak terasa kasar, tapi bisa menyakitkan</li>
+                                        <li>• Gengsi untuk mengakui kesalahan (masih dalam proses belajar)</li>
                                     </ul>
                                 </div>
                             </div>
 
+                            {/* Lifestyle */}
                             <div className="bg-blue-100 rounded-2xl p-4 border-2 border-blue-800">
-                                <h3 className="text-xl font-bold text-blue-900 mb-3">FUN FACT</h3>
+                                <h3 className="text-xl font-bold text-blue-900 mb-3">LIFESTYLE & KEBIASAAN</h3>
                                 <ul className="text-sm text-blue-900 space-y-1">
-                                    <li>• suka parfum maskulin fresh kagies Belagiio Rave Culture atau Romance Ford</li>
-                                    <li>• Love Languagenjya Act Of Service</li>
-                                    <li>• lebih suka dicerawetin daripada dicuekin</li>
-                                    <li>• NO SMOKING NO DZIKIR</li>
-                                    <li>• alergi manas</li>
-                                    <li>• males bawa motor lebih suka jalan kaki/krasunn</li>
-                                    <li>• Sibuk Nguris Adek Bungsu</li>
+                                    <li>• Tidak merokok & tidak minum alkohol</li>
+                                    <li>• Lebih suka jalan kaki atau transportasi umum</li>
+                                    <li>• Lebih nyaman menghabiskan waktu di rumah</li>
+                                    <li>• Suka parfum dengan karakter maskulin fresh</li>
                                 </ul>
                             </div>
                         </div>
 
-                        {/* 2. PRINSIP HIDUP PAI */}
+                        {/* 2. PRINSIP HIDUP & POLA HIDUP */}
                         <div className="bg-white/5 backdrop-blur-lg rounded-3xl p-8 border border-white/10 shadow-2xl">
                             <h2 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-amber-300 to-yellow-300 bg-clip-text text-transparent">
-                                🌟 Prinsip Hidup PAI
+                                🌟 Prinsip & Pola Hidup
                             </h2>
 
                             <div className="grid md:grid-cols-2 gap-4 mb-6">
                                 <div className="bg-amber-100 rounded-2xl p-4 border-2 border-amber-800">
-                                    <h3 className="text-xl font-bold text-amber-900 mb-3">PRINSIP HIDUP PAI</h3>
+                                    <h3 className="text-xl font-bold text-amber-900 mb-3">PRINSIP HIDUP</h3>
                                     <ul className="text-sm text-amber-900 space-y-1">
-                                        <li>• Menjunjung Tinggi Rukun Iman dan Rukun Islam Yang Utama</li>
-                                        <li>• Prinsip cenderung Stoikisme dan politik moderat</li>
-                                        <li>• Jujur Fakta Data lebih baik. Kebohongan boleh dalam kondisi darurat</li>
-                                        <li>• Family Oriented, Focus Oriented, Purpose-driven life</li>
-                                        <li>• Progress over perfection, clarity over drama</li>
-                                        <li>• Cinta itu Harus Bertumbuh, Gak Cuma Nyaman</li>
-                                        <li>• Hidup itu Kolaborasi, Bukan Kompetisi</li>
-                                        <li>• Introvert tapi tetap bersosial pilih pilih</li>
-                                        <li>• Lebih suka dirumah</li>
+                                        <li>• Menjunjung tinggi nilai agama (Rukun Iman & Islam)</li>
+                                        <li>• Cenderung ke stoikisme dan pemikiran moderat</li>
+                                        <li>• Mengutamakan fakta & data dibanding asumsi</li>
+                                        <li>• Progress over perfection</li>
+                                        <li>• Clarity over drama</li>
+                                        <li>• Hubungan harus bertumbuh, bukan sekadar nyaman</li>
+                                        <li>• Hidup adalah kolaborasi, bukan kompetisi</li>
                                     </ul>
                                 </div>
                                 <div className="bg-red-100 rounded-2xl p-4 border-2 border-red-800">
-                                    <h3 className="text-xl font-bold text-red-900 mb-3">POLA HIDUP PAI</h3>
+                                    <h3 className="text-xl font-bold text-red-900 mb-3">POLA HIDUP</h3>
                                     <ul className="text-sm text-red-900 space-y-1">
-                                        <li>• Pola Tidur: 5 Jam Minimal (22.00-04.30 / 24.00-06.00)</li>
-                                        <li>• Rutinitas Pagi: Kopi dan Sarapan Nasi Wajib</li>
-                                        <li>• Kurang Suka: Jengkol Petai</li>
-                                        <li>• Makanan Pemicu Gerd</li>
-                                        <li>• Menghindari Ultra Prosses Food</li>
-                                        <li>• Pedas max lvl 2 Gacoan</li>
-                                        <li>• Gak picky tapi cenderung makan sehat</li>
-                                        <li>• Hidup Saling, tidak 100% bergantian</li>
-                                        <li>• Workaholic, butuh diingetin</li>
+                                        <li>• Pola Tidur: 5–7 jam (22.00–04.30 / 00.00–06.00)</li>
+                                        <li>• Wajib sarapan (kopi + nasi)</li>
+                                        <li>• Menghindari: jengkol, petai, pemicu GERD</li>
+                                        <li>• Mengurangi ultra processed food</li>
+                                        <li>• Tidak terlalu picky, tapi cenderung makan sehat</li>
                                     </ul>
                                 </div>
                             </div>
@@ -162,189 +160,102 @@ const X9k2m7p4q1s8 = () => {
                                 <div className="bg-yellow-100 rounded-2xl p-4 border-2 border-yellow-800">
                                     <h3 className="text-xl font-bold text-yellow-900 mb-3">POLA FINANSIAL</h3>
                                     <ul className="text-sm text-yellow-900 space-y-1">
-                                        <li>• Keterbukaan Finansial (hutang, penghasilan, pengeluaran)</li>
-                                        <li>• Accountable minimal tau uangnya kemana</li>
-                                        <li>• Mengarahkan tabihan untuk kebutuhan bersama</li>
-                                        <li>• Buat goals tujuan bareng</li>
-                                        <li>• Bersyukur untuk berkah hidup day by day</li>
-                                        <li><strong>Boros yang ditoleransi:</strong></li>
-                                        <li>  - Kebutuhan Rumah Tangga</li>
-                                        <li>  - Kesehatan Keluarga</li>
-                                        <li>  - Sedekah ke ortu/tetangga</li>
+                                        <li>• Transparansi finansial itu penting (minimal tahu alur uang)</li>
+                                        <li>• Tidak harus full sharing, tapi harus accountable</li>
+                                        <li>• Lebih fokus ke perencanaan (harian, bulanan, tahunan)</li>
+                                        <li>• Menghindari mengungkit uang secara berlebihan</li>
+                                        <li><strong>Pengeluaran yang ditoleransi:</strong></li>
+                                        <li>  - Kebutuhan rumah tangga</li>
+                                        <li>  - Makanan & Kesehatan</li>
+                                        <li>  - Keluarga & Sedekah</li>
                                     </ul>
                                 </div>
                                 <div className="bg-red-200 rounded-2xl p-4 border-2 border-red-900">
-                                    <h3 className="text-xl font-bold text-red-900 mb-3">LOVE LANGUAGE</h3>
+                                    <h3 className="text-xl font-bold text-red-900 mb-3">LOVE LANGUAGE & RELASI</h3>
                                     <ul className="text-sm text-red-900 space-y-1">
-                                        <li>• Diapresiai tidak perlu sering (Pulpen, Ciurn, Peluk)</li>
-                                        <li>• ACT of Service & Physical Touch</li>
-                                        <li>• Tidak terlalu kata-kata affirmation berlebihan</li>
-                                        <li>• Diskusi dengan DATA dan FAKTA</li>
-                                        <li>• Maaf lewat hadiah/pelukan/act of service</li>
-                                        <li>• Lebih senang me time berdua di rumah</li>
+                                        <li>• <strong>Dominan:</strong> Act of Service & Physical Touch</li>
+                                        <li>• Kurang nyaman dengan words of affirmation berlebihan</li>
+                                        <li>• Lebih menghargai aksi daripada kata-kata</li>
+                                        <li>• Lebih suka quality time sederhana (di rumah / tempat sepi)</li>
+                                        <li>• Kalau minta maaf, cenderung tidak verbal—lebih ke tindakan (pelukan, gesture, dll)</li>
                                     </ul>
                                 </div>
                             </div>
 
                             <div className="bg-blue-200 rounded-2xl p-4 border-2 border-blue-900">
-                                <h3 className="text-xl font-bold text-blue-900 mb-3">YANG TIDAK BISA DIKOMPROMIKAN</h3>
+                                <h3 className="text-xl font-bold text-blue-900 mb-3">YANG TIDAK BISA DIKOMPROMI</h3>
                                 <div className="grid md:grid-cols-2 gap-4">
                                     <ul className="text-sm text-blue-900 space-y-1">
-                                        <li>• KEBIASAAN BERHUTANG DILUAR KEMAMPUAN</li>
-                                        <li>• Posesif berlebihan</li>
-                                        <li>• Terlalu Drama</li>
+                                        <li>• Selingkuh</li>
+                                        <li>• Kebiasaan berhutang di luar kemampuan</li>
+                                        <li>• Sikap posesif berlebihan</li>
                                     </ul>
                                     <ul className="text-sm text-blue-900 space-y-1">
-                                        <li>• Mengorbankan Value sendiri dan Pasangan</li>
-                                        <li>• Hobi Tertentu (bisa diskusi)</li>
+                                        <li>• Drama berlebihan</li>
+                                        <li>• Mengorbankan value pribadi</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
 
-                        {/* 3. RED FLAG & HOW TO HANDLE */}
+                        {/* 3. EKSPEKTASI & VISI */}
                         <div className="bg-white/5 backdrop-blur-lg rounded-3xl p-8 border border-white/10 shadow-2xl">
                             <h2 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-red-300 to-pink-300 bg-clip-text text-transparent">
-                                🚩 Red Flag & How to Handle
+                                💍 Ekspektasi Relasi & Visi Hidup
                             </h2>
 
                             <div className="grid md:grid-cols-2 gap-4 mb-6">
-                                <div className="bg-red-100 rounded-2xl p-4 border-2 border-red-800">
-                                    <h3 className="text-xl font-bold text-red-900 mb-3">RED FLAG</h3>
-                                    <ul className="text-sm text-red-900 space-y-1">
-                                        <li>• Terlalu Keras Sama Diri Sendiri</li>
-                                        <li>• Butuh Me Time sering ngilang</li>
-                                        <li>• Terlalu Logis dan gak suka feeling</li>
-                                        <li>• Peka tapi gak suka nunjukin</li>
-                                        <li>• Over-responsible dan Over-Independent</li>
-                                        <li>• Cenderung mendendam sampai meledat</li>
-                                        <li>• Menutupi emosi dan sensitivitas</li>
-                                        <li>• Agak Gensi Ngaku salah (proses belajar)</li>
+                                <div className="bg-pink-100 rounded-2xl p-4 border-2 border-pink-800">
+                                    <h3 className="text-xl font-bold text-pink-900 mb-3">EKSPEKTASI RELASI</h3>
+                                    <ul className="text-sm text-pink-900 space-y-1">
+                                        <li>• Hubungan serius, tidak ingin pacaran terlalu lama</li>
+                                        <li>• Fokus ke arah pernikahan (ibadah)</li>
+                                        <li>• Saling bertumbuh dan supportif</li>
+                                        <li>• Komunikasi dengan kepala dingin dan berbasis fakta</li>
                                     </ul>
                                 </div>
-                                <div className="bg-red-100 rounded-2xl p-4 border-2 border-red-800">
-                                    <h3 className="text-xl font-bold text-red-900 mb-3">HOW TO HANDLE</h3>
-                                    <ul className="text-sm text-red-900 space-y-1">
-                                        <li>• Apresiasi Tentunya</li>
-                                        <li>• Harus mengerti posisinya dan momentum</li>
-                                        <li>• Harus bisa ambil dari sisi persaannya</li>
-                                        <li>• Ingetin lu gak sendiri dan bisa lapang bersama</li>
-                                        <li>• Beri ruang dan waktu sampai bisa ajak diskusi</li>
+                                <div className="bg-amber-100 rounded-2xl p-4 border-2 border-amber-800">
+                                    <h3 className="text-xl font-bold text-amber-900 mb-3">VISI HIDUP</h3>
+                                    <ul className="text-sm text-amber-900 space-y-1">
+                                        <li>• Membangun keluarga yang bertumbuh bersama</li>
+                                        <li>• Menjadi "rumah" (tempat pulang)</li>
+                                        <li>• Mengutamakan kebahagiaan tanpa mengorbankan value</li>
                                     </ul>
                                 </div>
                             </div>
 
-                            <div className="bg-amber-100 rounded-2xl p-4 border-2 border-amber-800 mb-6">
-                                <h3 className="text-xl font-bold text-amber-900 mb-3">VISI & MISI HIDUP</h3>
-                                <ul className="text-sm text-amber-900 space-y-1">
-                                    <li>• Menjadikan rumah tangga sebagai ibadah kepada Allah SWT</li>
-                                    <li>• Gak mau pacaran lama, fokus hubungan serius untuk Ibadah</li>
-                                    <li>• Bikin Plan: tabungan target, short/mid/long term</li>
-                                    <li>• Bertumbuh Bersama, Supportif Produktif</li>
-                                    <li>• Pertanggung Jawab</li>
-                                    <li>• Mewariskan Nilai, Bukan Sekadar Harta</li>
-                                    <li><strong>Misi:</strong> Kebahagiaan Bersama tanpa mengorbankan value</li>
-                                </ul>
-                            </div>
-
-                            <div className="bg-amber-200 rounded-2xl p-4 border-2 border-amber-900 mb-6">
-                                <h3 className="text-xl font-bold text-amber-900 mb-3">RENCANA PARENTING</h3>
-                                <ul className="text-sm text-amber-900 space-y-1">
-                                    <li>• Beri apresiasi sewajarnya</li>
-                                    <li>• Parenting sesuai umur, beri pengertian kondisi ortu</li>
-                                    <li>• Mendidik prinsip dan nilai hidup</li>
-                                    <li>• Anak bukan investasi, tapi amanah</li>
-                                    <li>• Suami sebagai iman di rumah</li>
-                                    <li>• Batasan screen time, arahkan sesuai hobi</li>
-                                    <li>• Lainnya diskusikan</li>
-                                </ul>
-                            </div>
-
-                            <div className="bg-red-200 rounded-2xl p-4 border-2 border-red-900">
-                                <h3 className="text-xl font-bold text-red-900 mb-3">PERAN DAN EKSPEKTASI RT</h3>
+                            <div className="bg-red-200 rounded-2xl p-4 border-2 border-red-900 mb-6">
+                                <h3 className="text-xl font-bold text-red-900 mb-3">PERAN DALAM RUMAH TANGGA</h3>
                                 <div className="grid md:grid-cols-2 gap-4 text-sm text-red-900">
                                     <div>
-                                        <p className="font-bold mb-2">Peran Istri:</p>
+                                        <p className="font-bold mb-2">Sebagai Suami:</p>
                                         <ul className="space-y-1">
-                                            <li>• Sabor Sabor Syukur</li>
-                                            <li>• Musyawarah</li>
-                                            <li>• Balance untuk diri/anak/suami</li>
-                                            <li>• Rumah sebagai tempat pulang</li>
-                                            <li>• Perhatian kecil & Mendidik Anak</li>
+                                            <li>• Pemimpin yang adil</li>
+                                            <li>• Memberi nafkah yang halal</li>
+                                            <li>• Memberikan rasa aman</li>
+                                            <li>• Terbuka untuk diskusi dan membantu pekerjaan rumah</li>
                                         </ul>
                                     </div>
                                     <div>
-                                        <p className="font-bold mb-2">Peran Suami:</p>
+                                        <p className="font-bold mb-2">Sebagai Istri (Ekspektasi):</p>
                                         <ul className="space-y-1">
-                                            <li>• Pemimpin keluarga adil</li>
-                                            <li>• Mencari Nafkah halal</li>
-                                            <li>• Memberikan Rasa Aman</li>
-                                            <li>• Menghormati pendapat istri</li>
-                                            <li>• Bantu pekerjaan rumah</li>
+                                            <li>• Supportif dan bisa diajak musyawarah</li>
+                                            <li>• Menjaga keseimbangan diri, anak, dan pasangan</li>
+                                            <li>• Boleh bekerja selama bisa balance</li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        {/* 4. LAMPIRAN & TIPS */}
-                        <div className="bg-white/5 backdrop-blur-lg rounded-3xl p-8 border border-white/10 shadow-2xl">
-                            <h2 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
-                                💡 Lampiran & Tips
-                            </h2>
-
-                            <div className="bg-yellow-100 rounded-2xl p-4 border-2 border-yellow-800 mb-6">
-                                <h3 className="text-xl font-bold text-yellow-900 mb-3">Lingkungan Kerja Ideal</h3>
-                                <div className="grid md:grid-cols-2 gap-4 text-sm text-yellow-900">
-                                    <div className="bg-white/50 p-3 rounded-xl">
-                                        <strong>Budaya:</strong> Terbuka, kolaboratif, tapi gak terlalu hirarkis
-                                    </div>
-                                    <div className="bg-white/50 p-3 rounded-xl">
-                                        <strong>Role:</strong> Business Strategist, Researcher, Connector
-                                    </div>
-                                    <div className="bg-white/50 p-3 rounded-xl">
-                                        <strong>Lingkungan:</strong> Penuh diskusi, problem solving
-                                    </div>
-                                    <div className="bg-white/50 p-3 rounded-xl">
-                                        <strong>Waktu:</strong> Fleksibel, hybrid oke, bisa deep work
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="bg-white rounded-2xl p-4 border-2 border-gray-300 mb-6">
-                                <h3 className="text-xl font-bold text-gray-900 mb-3">Si Cuek tapi Sayang</h3>
-                                <div className="text-sm text-gray-800 space-y-2">
-                                    <p><strong>Love Language:</strong> ACT of Service - memberikan momen bermakna bersama</p>
-                                    <p><strong>Attachment:</strong> Securely Independent - nyaman sendiri dan percaya pasangan</p>
-                                    <p><strong>Role:</strong> Relaxed Supporter - mendukung tanpa tekanan berlebihan</p>
-                                    <p><strong>Tips:</strong> Apresiasi dengan cara yang berarti, bukan selalu materi</p>
-                                </div>
-                            </div>
-
-                            <div className="bg-pink-100 rounded-2xl p-4 border-2 border-pink-800">
-                                <h3 className="text-xl font-bold text-pink-900 mb-3">20 Pertanyaan Penting Sebelum Nikah</h3>
-                                <div className="grid md:grid-cols-2 gap-2 text-sm text-pink-900">
-                                    <div>1. Berapa agi satu sama lan?</div>
-                                    <div>2. Pengalaman & tanggungan per bulan?</div>
-                                    <div>3. Istri harus bekerja?</div>
-                                    <div>4. Sistem pengaturan uang RT?</div>
-                                    <div>5. Masa lalu dengan mantan?</div>
-                                    <div>6. Hutang keluarga tersembunyi?</div>
-                                    <div>7. Mau punya anak? Menunda?</div>
-                                    <div>8. Pendidikan untuk anak?</div>
-                                    <div>9. Tinggal bareng ortu atau terpisah?</div>
-                                    <div>10. Solusi untuk perceraian?</div>
-                                    <div>11. Riwayat penyakit turunan?</div>
-                                    <div>12. Deal breaker perceraian?</div>
-                                    <div>13. Fantasi/fetish tidak wajar?</div>
-                                    <div>14. Pembagian pekerjaan rumah?</div>
-                                    <div>15. Pernikahan besar/sederhana?</div>
-                                    <div>16. Jika tidak diberkati anak?</div>
-                                    <div>17. Investasi pasangan?</div>
-                                    <div>18. Siapa dilanggan selingkuhan?</div>
-                                    <div>19. Visi-misi pernikahan?</div>
-                                    <div>20. Kebiasaan saat ada masalah?</div>
-                                </div>
+                            <div className="bg-amber-200 rounded-2xl p-4 border-2 border-amber-900">
+                                <h3 className="text-xl font-bold text-amber-900 mb-3">PARENTING VALUE</h3>
+                                <ul className="text-sm text-amber-900 space-y-1">
+                                    <li>• Mendidik dengan prinsip & nilai hidup</li>
+                                    <li>• Anak bukan investasi</li>
+                                    <li>• Disiplin dengan sebab-akibat</li>
+                                    <li>• Membatasi screen time</li>
+                                    <li>• Mengembangkan minat & bakat anak</li>
+                                </ul>
                             </div>
                         </div>
 
@@ -377,10 +288,10 @@ const X9k2m7p4q1s8 = () => {
                             key={i}
                             className="absolute animate-float"
                             style={{
-                                left: `${Math.random() * 100}%`,
-                                top: `${Math.random() * 100}%`,
-                                animationDelay: `${Math.random() * 5}s`,
-                                animationDuration: `${10 + Math.random() * 10}s`,
+                                left: `${(i * 7 + 13) % 100}%`,
+                                top: `${(i * 13 + 7) % 100}%`,
+                                animationDelay: `${(i * 0.3) % 5}s`,
+                                animationDuration: `${10 + (i * 0.7) % 10}s`,
                                 opacity: 0.1
                             }}
                         >
