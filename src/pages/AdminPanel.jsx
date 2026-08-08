@@ -211,11 +211,19 @@ const PortfolioTab = ({ projects, onRefresh }) => {
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState({ title: '', category: 'graphic-design', image_url: '', description: '', external_link: '' });
 
-  const categories = [
+  const uniqueCategories = Array.from(new Set(projects.map(p => p.category))).filter(Boolean);
+  const baseCategories = [
     { id: 'graphic-design', label: 'Graphic Design' },
     { id: 'digital-marketing', label: 'Digital Marketing' },
     { id: 'ui-ux', label: 'UI/UX' },
     { id: 'business', label: 'Business' }
+  ];
+  const categories = [
+    ...baseCategories,
+    ...uniqueCategories.filter(cat => !baseCategories.some(bc => bc.id === cat)).map(cat => ({
+      id: cat,
+      label: cat.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+    }))
   ];
 
   const startNew = () => { setForm({ title: '', category: 'graphic-design', image_url: '', description: '', external_link: '' }); setEditing('new'); };
@@ -245,7 +253,23 @@ const PortfolioTab = ({ projects, onRefresh }) => {
         <div className="bg-white/[0.03] backdrop-blur-sm rounded-2xl border border-white/[0.06] p-6 space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div><label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">Project Title</label><input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50" /></div>
-            <div><label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">Category</label><select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50">{categories.map(c => <option key={c.id} value={c.id} className="bg-[#0a0a1a]">{c.label}</option>)}</select></div>
+            <div>
+              <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">Category</label>
+              <div className="flex gap-2">
+                <select value={categories.some(c => c.id === form.category) ? form.category : 'custom'} onChange={(e) => setForm({ ...form, category: e.target.value === 'custom' ? '' : e.target.value })} className="flex-1 px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50">
+                  {categories.map(c => <option key={c.id} value={c.id} className="bg-[#0a0a1a]">{c.label}</option>)}
+                  <option value="custom" className="bg-[#0a0a1a]">+ Enter Custom Category...</option>
+                </select>
+                {(!categories.some(c => c.id === form.category) || form.category === '') && (
+                  <input 
+                    placeholder="Enter slug (e.g. streetwear)..." 
+                    value={form.category} 
+                    onChange={(e) => setForm({ ...form, category: e.target.value.toLowerCase().replace(/\s+/g, '-') })} 
+                    className="flex-1 px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50"
+                  />
+                )}
+              </div>
+            </div>
           </div>
           <div><label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">Image URL</label><input value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50" placeholder="/images/project-x.png or https://..." />{form.image_url && <img src={form.image_url} alt="preview" className="mt-3 h-32 object-cover rounded-xl border border-white/[0.06]" />}</div>
           <div><label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">External Link (Optional)</label><input value={form.external_link} onChange={(e) => setForm({ ...form, external_link: e.target.value })} className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50" placeholder="https://..." /></div>
@@ -370,15 +394,60 @@ const CvTab = () => {
 
 // ─── ABOUT ME EDITOR TAB ────────────────────────────
 const AboutTab = () => {
-  const [form, setForm] = useState({ name: '', title: '', bio: '', skills: [], social: {} });
+  const [form, setForm] = useState({
+    name: '',
+    title: '',
+    bio: '',
+    skills: [],
+    social: {},
+    experience: [],
+    education: [],
+    details: {},
+    portfolio_links: [],
+    achievements: [],
+    section_order: [],
+    custom_skills: [],
+    contact_menu_target: 'section'
+  });
+  const [activeSubTab, setActiveSubTab] = useState('general');
   const [saved, setSaved] = useState(false);
-  const [skillInput, setSkillInput] = useState('');
   const [loading, setLoading] = useState(true);
+
+  // New item inputs
+  const [skillInput, setSkillInput] = useState('');
+  const [newExp, setNewExp] = useState({ role: '', company: '', period: '', detailsText: '' });
+  
+  const [newEdu, setNewEdu] = useState({ degree: '', major: '', period: '', school: '' });
+
+  const [newAchievement, setNewAchievement] = useState('');
+  const [newLink, setNewLink] = useState({ label: '', url: '' });
+
+  // Custom skills builder
+  const [newCatName, setNewCatName] = useState('');
+  const [newBadge, setNewBadge] = useState({ name: '', text: '', bg: '#7c3aed', logo: '' });
+  const [selectedCatIdx, setSelectedCatIdx] = useState(null);
+
+  // Drag and drop state
+  const [draggedIndex, setDraggedIndex] = useState(null);
 
   useEffect(() => {
     const load = async () => {
       const data = await aboutStore.get();
-      setForm(data);
+      setForm({
+        name: data.name || '',
+        title: data.title || '',
+        bio: data.bio || '',
+        skills: data.skills || [],
+        social: data.social || {},
+        experience: data.experience || [],
+        education: data.education || [],
+        details: data.details || {},
+        portfolio_links: data.portfolio_links || [],
+        achievements: data.achievements || [],
+        section_order: data.section_order || ['profile', 'experience', 'skills', 'education', 'portfolio', 'details', 'achievements'],
+        custom_skills: data.custom_skills || [],
+        contact_menu_target: data.contact_menu_target || 'section'
+      });
       setLoading(false);
     };
     load();
@@ -397,28 +466,514 @@ const AboutTab = () => {
     }
   };
 
+  // Experiences handlers
+  const handleAddExp = () => {
+    if (!newExp.role || !newExp.company) return alert('Role & Company are required');
+    const details = newExp.detailsText.split('\n').map(d => d.trim()).filter(Boolean);
+    const item = { role: newExp.role, company: newExp.company, period: newExp.period, details };
+    setForm({ ...form, experience: [...form.experience, item] });
+    setNewExp({ role: '', company: '', period: '', detailsText: '' });
+  };
+
+  const handleDeleteExp = (idx) => {
+    setForm({ ...form, experience: form.experience.filter((_, i) => i !== idx) });
+  };
+
+  const moveExp = (idx, dir) => {
+    const newList = [...form.experience];
+    const target = idx + dir;
+    if (target < 0 || target >= newList.length) return;
+    const temp = newList[idx];
+    newList[idx] = newList[target];
+    newList[target] = temp;
+    setForm({ ...form, experience: newList });
+  };
+
+  // Education handlers
+  const handleAddEdu = () => {
+    if (!newEdu.degree || !newEdu.school) return alert('Degree & School are required');
+    setForm({ ...form, education: [...form.education, { ...newEdu }] });
+    setNewEdu({ degree: '', major: '', period: '', school: '' });
+  };
+
+  const handleDeleteEdu = (idx) => {
+    setForm({ ...form, education: form.education.filter((_, i) => i !== idx) });
+  };
+
+  const moveEdu = (idx, dir) => {
+    const newList = [...form.education];
+    const target = idx + dir;
+    if (target < 0 || target >= newList.length) return;
+    const temp = newList[idx];
+    newList[idx] = newList[target];
+    newList[target] = temp;
+    setForm({ ...form, education: newList });
+  };
+
+  // Custom Skills Categories & Badges handlers
+  const handleAddCat = () => {
+    if (!newCatName.trim()) return;
+    setForm({ ...form, custom_skills: [...form.custom_skills, { category: newCatName.trim(), items: [] }] });
+    setNewCatName('');
+  };
+
+  const handleDeleteCat = (catIdx) => {
+    setForm({ ...form, custom_skills: form.custom_skills.filter((_, i) => i !== catIdx) });
+    if (selectedCatIdx === catIdx) setSelectedCatIdx(null);
+  };
+
+  const handleAddBadge = () => {
+    if (selectedCatIdx === null) return alert('Pilih Kategori terlebih dahulu');
+    if (!newBadge.name.trim() || !newBadge.text.trim()) return alert('Badge Name & Text/Initials are required');
+    const updated = [...form.custom_skills];
+    updated[selectedCatIdx].items.push({ ...newBadge });
+    setForm({ ...form, custom_skills: updated });
+    setNewBadge({ name: '', text: '', bg: '#7c3aed', logo: '' });
+  };
+
+  const handleDeleteBadge = (catIdx, badgeIdx) => {
+    const updated = [...form.custom_skills];
+    updated[catIdx].items = updated[catIdx].items.filter((_, i) => i !== badgeIdx);
+    setForm({ ...form, custom_skills: updated });
+  };
+
+  // Portfolio Links handlers
+  const handleAddLink = () => {
+    if (!newLink.label || !newLink.url) return alert('Label & URL are required');
+    setForm({ ...form, portfolio_links: [...form.portfolio_links, { ...newLink }] });
+    setNewLink({ label: '', url: '' });
+  };
+
+  const handleDeleteLink = (idx) => {
+    setForm({ ...form, portfolio_links: form.portfolio_links.filter((_, i) => i !== idx) });
+  };
+
+  // Achievements handlers
+  const handleAddAch = () => {
+    if (!newAchievement.trim()) return;
+    setForm({ ...form, achievements: [...form.achievements, newAchievement.trim()] });
+    setNewAchievement('');
+  };
+
+  const handleDeleteAch = (idx) => {
+    setForm({ ...form, achievements: form.achievements.filter((_, i) => i !== idx) });
+  };
+
+  // Drag and drop section reorder handlers
+  const handleDragStart = (idx) => {
+    setDraggedIndex(idx);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (idx) => {
+    if (draggedIndex === null) return;
+    const newList = [...form.section_order];
+    const draggedItem = newList[draggedIndex];
+    newList.splice(draggedIndex, 1);
+    newList.splice(idx, 0, draggedItem);
+    setForm({ ...form, section_order: newList });
+    setDraggedIndex(null);
+  };
+
+  const moveSection = (idx, dir) => {
+    const newList = [...form.section_order];
+    const target = idx + dir;
+    if (target < 0 || target >= newList.length) return;
+    const temp = newList[idx];
+    newList[idx] = newList[target];
+    newList[target] = temp;
+    setForm({ ...form, section_order: newList });
+  };
+
   if (loading) return <div className="text-white/40 text-center py-16">Loading about data...</div>;
+
+  const subTabs = [
+    { id: 'general', label: 'General / Bio', icon: '👤' },
+    { id: 'reorder', label: 'Layout Reorder', icon: '↕️' },
+    { id: 'experience', label: 'Experience', icon: '💼' },
+    { id: 'education', label: 'Education', icon: '🎓' },
+    { id: 'skills', label: 'Skills Badges', icon: '🎨' },
+    { id: 'links', label: 'Portfolio Links', icon: '🔗' },
+    { id: 'details', label: 'Personal Details', icon: '📝' },
+    { id: 'achievements', label: 'Achievements', icon: '🏆' },
+  ];
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-white">👤 About Me Editor</h2>
-        <button onClick={handleSave} className={`px-5 py-2 rounded-xl font-semibold text-sm transition-all shadow-lg ${saved ? 'bg-emerald-600 text-white' : 'bg-gradient-to-r from-violet-600 to-cyan-600 text-white shadow-violet-500/25'}`}>{saved ? '✅ Saved to DB!' : '💾 Save About'}</button>
-      </div>
-      <div className="bg-white/[0.03] backdrop-blur-sm rounded-2xl border border-white/[0.06] p-6 space-y-5">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div><label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">Full Name</label><input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50 transition-all" /></div>
-          <div><label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">Title</label><input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50 transition-all" /></div>
-        </div>
-        <div><label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">Bio</label><textarea value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} rows={4} className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50 transition-all resize-none" /></div>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">Skills & Interests <span className="text-white/30 lowercase">(Untuk form About / Let's work together)</span></label>
-          <div className="flex flex-wrap gap-2 mb-3">{form.skills.map((skill) => (<span key={skill} className="px-3 py-1.5 rounded-lg bg-violet-500/10 text-violet-400 text-sm flex items-center gap-2 border border-violet-500/20">{skill}<button onClick={() => setForm({ ...form, skills: form.skills.filter(s => s !== skill) })} className="text-violet-300 hover:text-red-400 transition-colors">×</button></span>))}</div>
-          <div className="flex gap-2"><input value={skillInput} onChange={(e) => setSkillInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addSkill())} className="flex-1 px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white placeholder-white/20 focus:outline-none focus:border-violet-500/50 transition-all text-sm" placeholder="Add a skill or interest..." /><button onClick={addSkill} className="px-4 py-2.5 rounded-xl bg-violet-500/20 text-violet-400 hover:bg-violet-500/30 transition-all text-sm">+ Add</button></div>
+          <h2 className="text-2xl font-bold text-white">👤 About Me & CV Layout Editor</h2>
+          <p className="text-xs text-white/40">Customize order, text, logos, badges, and behavior of /about page</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div><label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">Instagram</label><input value={form.social?.instagram || ''} onChange={(e) => setForm({ ...form, social: { ...form.social, instagram: e.target.value } })} className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50 transition-all" /></div>
-          <div><label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">Email</label><input value={form.social?.email || ''} onChange={(e) => setForm({ ...form, social: { ...form.social, email: e.target.value } })} className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50 transition-all" /></div>
+        <button onClick={handleSave} className={`px-5 py-2.5 rounded-xl font-semibold text-sm transition-all shadow-lg shrink-0 ${saved ? 'bg-emerald-600 text-white' : 'bg-gradient-to-r from-violet-600 to-cyan-600 text-white shadow-violet-500/25'}`}>
+          {saved ? '✅ Saved successfully!' : '💾 Save Changes'}
+        </button>
+      </div>
+
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* Sub tabs navigation */}
+        <div className="w-full lg:w-60 shrink-0 flex flex-wrap lg:flex-col gap-1 bg-white/[0.02] border border-white/[0.04] p-2 rounded-2xl">
+          {subTabs.map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveSubTab(tab.id)}
+              className={`flex-1 lg:flex-initial flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-medium transition-all text-left ${activeSubTab === tab.id ? 'bg-white/5 text-white border border-white/10' : 'text-white/40 hover:text-white/70 hover:bg-white/[0.02]'}`}
+            >
+              <span>{tab.icon}</span>
+              <span>{tab.label}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Sub tab content pane */}
+        <div className="flex-1 bg-white/[0.02] border border-white/[0.04] p-6 rounded-3xl space-y-6">
+          
+          {/* GENERAL & BIO */}
+          {activeSubTab === 'general' && (
+            <div className="space-y-5">
+              <h3 className="text-lg font-semibold text-white">General Information</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">Full Name</label>
+                  <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50 transition-all" />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">Title</label>
+                  <input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50 transition-all" />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">Bio Paragraph</label>
+                <textarea value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} rows={5} className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50 transition-all resize-none leading-relaxed" />
+              </div>
+
+              <div className="border-t border-white/5 pt-5">
+                <label className="block text-sm font-semibold text-white mb-2">Navbar Contact Link Redirection</label>
+                <p className="text-xs text-white/40 mb-3">Tentukan kemana tombol "Contact" di menu utama akan diarahkan</p>
+                <select 
+                  value={form.contact_menu_target} 
+                  onChange={(e) => setForm({ ...form, contact_menu_target: e.target.value })} 
+                  className="w-full md:w-80 px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50 transition-all"
+                >
+                  <option value="section" className="bg-[#0a0a1a]">Section di Bawah Halaman Utama (/#contact)</option>
+                  <option value="page" className="bg-[#0a0a1a]">Halaman Terpisah (/contact)</option>
+                </select>
+              </div>
+
+              <div className="border-t border-white/5 pt-5">
+                <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">Interests & Hobbies <span className="text-white/20">(Pilihan emoji ditambahkan otomatis)</span></label>
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {form.skills.map((interest) => (
+                    <span key={interest} className="px-3 py-1.5 rounded-lg bg-violet-500/10 text-violet-400 text-sm flex items-center gap-2 border border-violet-500/20">
+                      {interest}
+                      <button onClick={() => setForm({ ...form, skills: form.skills.filter(s => s !== interest) })} className="text-violet-300 hover:text-red-400 transition-colors">×</button>
+                    </span>
+                  ))}
+                </div>
+                <div className="flex gap-2">
+                  <input 
+                    value={skillInput} 
+                    onChange={(e) => setSkillInput(e.target.value)} 
+                    onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addSkill())} 
+                    className="flex-1 px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white placeholder-white/20 focus:outline-none focus:border-violet-500/50 transition-all text-sm" 
+                    placeholder="Contoh: Gaming, Traveling, Film Making..." 
+                  />
+                  <button onClick={addSkill} className="px-4 py-2.5 rounded-xl bg-violet-500/20 text-violet-400 hover:bg-violet-500/30 transition-all text-sm font-semibold">+ Add</button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* LAYOUT REORDER */}
+          {activeSubTab === 'reorder' && (
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white">Drag & Drop Section Layout</h3>
+              <p className="text-xs text-white/40">Tarik dan susun urutan section halaman `/about` di bawah ini, atau gunakan tombol panah</p>
+              
+              <div className="space-y-2">
+                {form.section_order.map((section, idx) => {
+                  const sectionLabels = {
+                    profile: '👤 Profile & Bio',
+                    experience: '💼 Work Experience',
+                    skills: '🎨 Skills & Tools Badges',
+                    education: '🎓 Education History',
+                    portfolio: '🔗 Portfolio Social Anchors',
+                    details: '📝 Personal Contact Details',
+                    achievements: '🏆 Trophy Achievements'
+                  };
+                  return (
+                    <div
+                      key={section}
+                      draggable
+                      onDragStart={() => handleDragStart(idx)}
+                      onDragOver={handleDragOver}
+                      onDrop={() => handleDrop(idx)}
+                      className="flex items-center justify-between p-4 bg-white/[0.02] border border-white/[0.06] rounded-xl hover:border-violet-500/40 hover:bg-white/[0.04] transition-all cursor-move group"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-white/30 group-hover:text-white/60 transition-colors">⠿</span>
+                        <span className="text-sm font-medium text-white">{sectionLabels[section] || section}</span>
+                      </div>
+                      <div className="flex gap-2">
+                        <button onClick={() => moveSection(idx, -1)} disabled={idx === 0} className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 disabled:opacity-20">▲</button>
+                        <button onClick={() => moveSection(idx, 1)} disabled={idx === form.section_order.length - 1} className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 disabled:opacity-20">▼</button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* EXPERIENCE */}
+          {activeSubTab === 'experience' && (
+            <div className="space-y-6">
+              <h3 className="text-lg font-semibold text-white">Work Experience Manager</h3>
+              
+              <div className="space-y-3">
+                {form.experience.map((exp, idx) => (
+                  <div key={idx} className="p-4 bg-white/[0.02] border border-white/[0.04] rounded-xl flex items-start justify-between gap-4">
+                    <div className="space-y-1 bg-transparent">
+                      <h4 className="font-bold text-white">{exp.role}</h4>
+                      <p className="text-xs text-white/60">{exp.company} • {exp.period}</p>
+                      <ul className="text-xs text-white/40 pl-4 list-disc mt-2">
+                        {exp.details.map((d, i) => <li key={i}>{d}</li>)}
+                      </ul>
+                    </div>
+                    <div className="flex flex-col gap-1 shrink-0 bg-transparent">
+                      <button onClick={() => handleDeleteExp(idx)} className="p-1.5 bg-red-500/10 text-red-500 rounded-lg hover:bg-red-500/20 text-xs">🗑️</button>
+                      <button onClick={() => moveExp(idx, -1)} disabled={idx === 0} className="p-1 bg-white/5 text-white/40 disabled:opacity-20 text-xs rounded">▲</button>
+                      <button onClick={() => moveExp(idx, 1)} disabled={idx === form.experience.length - 1} className="p-1 bg-white/5 text-white/40 disabled:opacity-20 text-xs rounded">▼</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="bg-white/[0.02] p-4 rounded-xl border border-white/[0.06] space-y-4">
+                <h4 className="text-sm font-semibold text-white">➕ Add Experience</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <input placeholder="Job Role / Title..." value={newExp.role} onChange={(e) => setNewExp({ ...newExp, role: e.target.value })} className="px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm text-white" />
+                  <input placeholder="Company / Organization..." value={newExp.company} onChange={(e) => setNewExp({ ...newExp, company: e.target.value })} className="px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm text-white" />
+                </div>
+                <input placeholder="Period (e.g. 2021 - Present or June 2025)..." value={newExp.period} onChange={(e) => setNewExp({ ...newExp, period: e.target.value })} className="w-full px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm text-white" />
+                <textarea rows={3} placeholder="Job description / details (Satu poin per baris)..." value={newExp.detailsText} onChange={(e) => setNewExp({ ...newExp, detailsText: e.target.value })} className="w-full px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm text-white resize-none" />
+                <button onClick={handleAddExp} className="px-4 py-2 bg-violet-600 text-white rounded-lg hover:bg-violet-500 font-semibold text-xs">+ Add Experience</button>
+              </div>
+            </div>
+          )}
+
+          {/* EDUCATION */}
+          {activeSubTab === 'education' && (
+            <div className="space-y-6">
+              <h3 className="text-lg font-semibold text-white">Education History Manager</h3>
+              
+              <div className="space-y-3">
+                {form.education.map((edu, idx) => (
+                  <div key={idx} className="p-4 bg-white/[0.02] border border-white/[0.04] rounded-xl flex items-start justify-between gap-4">
+                    <div>
+                      <h4 className="font-bold text-white">{edu.degree}</h4>
+                      <p className="text-xs text-white/60">{edu.school} • {edu.period}</p>
+                      {edu.major && <p className="text-xs text-white/40 mt-1">Major: {edu.major}</p>}
+                    </div>
+                    <div className="flex flex-col gap-1 shrink-0 bg-transparent">
+                      <button onClick={() => handleDeleteEdu(idx)} className="p-1.5 bg-red-500/10 text-red-500 rounded-lg hover:bg-red-500/20 text-xs">🗑️</button>
+                      <button onClick={() => moveEdu(idx, -1)} disabled={idx === 0} className="p-1 bg-white/5 text-white/40 disabled:opacity-20 text-xs rounded">▲</button>
+                      <button onClick={() => moveEdu(idx, 1)} disabled={idx === form.education.length - 1} className="p-1 bg-white/5 text-white/40 disabled:opacity-20 text-xs rounded">▼</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="bg-white/[0.02] p-4 rounded-xl border border-white/[0.06] space-y-4">
+                <h4 className="text-sm font-semibold text-white">➕ Add Education Entry</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <input placeholder="Degree (e.g. Bachelor Degree)..." value={newEdu.degree} onChange={(e) => setNewEdu({ ...newEdu, degree: e.target.value })} className="px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm text-white" />
+                  <input placeholder="School / University..." value={newEdu.school} onChange={(e) => setNewEdu({ ...newEdu, school: e.target.value })} className="px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm text-white" />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <input placeholder="Major / Specialization..." value={newEdu.major} onChange={(e) => setNewEdu({ ...newEdu, major: e.target.value })} className="px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm text-white" />
+                  <input placeholder="Period (e.g. 2019 - 2024)..." value={newEdu.period} onChange={(e) => setNewEdu({ ...newEdu, period: e.target.value })} className="px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm text-white" />
+                </div>
+                <button onClick={handleAddEdu} className="px-4 py-2 bg-violet-600 text-white rounded-lg hover:bg-violet-500 font-semibold text-xs">+ Add Education</button>
+              </div>
+            </div>
+          )}
+
+          {/* SKILLS BADGES */}
+          {activeSubTab === 'skills' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-white">Skills Categories & Badges</h3>
+              </div>
+
+              {/* Add category form */}
+              <div className="flex gap-2">
+                <input placeholder="Kategori baru (contoh: Design Tools)..." value={newCatName} onChange={(e) => setNewCatName(e.target.value)} className="flex-1 px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm text-white" />
+                <button onClick={handleAddCat} className="px-4 py-2.5 bg-violet-600 hover:bg-violet-500 text-white rounded-xl text-xs font-semibold">+ Tambah Kategori</button>
+              </div>
+
+              <div className="space-y-4 mt-4">
+                {form.custom_skills.map((cat, catIdx) => (
+                  <div key={catIdx} className="p-4 bg-white/[0.01] border border-white/[0.06] rounded-2xl space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-bold text-violet-400">{cat.category}</span>
+                      <div className="flex gap-2 bg-transparent">
+                        <button onClick={() => setSelectedCatIdx(catIdx)} className={`px-3 py-1 rounded-lg text-xs font-bold ${selectedCatIdx === catIdx ? 'bg-violet-600 text-white' : 'bg-white/5 text-white/50 hover:bg-white/10'}`}>
+                          {selectedCatIdx === catIdx ? '✓ Selected' : '⚙️ Add badges here'}
+                        </button>
+                        <button onClick={() => handleDeleteCat(catIdx)} className="p-1 bg-red-500/10 text-red-500 hover:bg-red-500/20 text-xs rounded-lg">🗑️ Delete Cat</button>
+                      </div>
+                    </div>
+
+                    {/* Badge container */}
+                    <div className="flex flex-wrap gap-2">
+                      {cat.items.map((badge, bIdx) => (
+                        <span key={bIdx} style={{ backgroundColor: badge.bg }} className="px-3 py-1.5 rounded-lg text-xs text-white font-bold flex items-center gap-2 shadow shadow-black/25">
+                          {badge.logo && <span className="inline-block">{badge.logo}</span>}
+                          <span>{badge.text}</span>
+                          <span className="text-white/40 text-[10px]">({badge.name})</span>
+                          <button onClick={() => handleDeleteBadge(catIdx, bIdx)} className="text-white/40 hover:text-white transition-colors ml-1 font-bold">×</button>
+                        </span>
+                      ))}
+                      {cat.items.length === 0 && <p className="text-xs text-white/20 italic">Belum ada badge di kategori ini</p>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {selectedCatIdx !== null && (
+                <div className="bg-white/[0.02] p-5 rounded-2xl border border-violet-500/20 space-y-4">
+                  <div className="flex items-center justify-between border-b border-white/5 pb-2">
+                    <h4 className="text-sm font-semibold text-white">✨ Add Badge to: <span className="text-violet-400">{form.custom_skills[selectedCatIdx]?.category}</span></h4>
+                    <button onClick={() => setSelectedCatIdx(null)} className="text-xs text-white/40 hover:text-white">Close</button>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs text-white/40 mb-1">Full Name (Tooltip)</label>
+                      <input placeholder="Photoshop, Illustrator, Facebook..." value={newBadge.name} onChange={(e) => setNewBadge({ ...newBadge, name: e.target.value })} className="w-full px-3 py-2 bg-white/[0.04] border border-white/[0.08] rounded-xl text-xs text-white" />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-white/40 mb-1">Badge Text / Initials</label>
+                      <input placeholder="Ai, Ps, fb, ig, dll..." value={newBadge.text} onChange={(e) => setNewBadge({ ...newBadge, text: e.target.value })} className="w-full px-3 py-2 bg-white/[0.04] border border-white/[0.08] rounded-xl text-xs text-white" />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs text-white/40 mb-1">Background Color</label>
+                      <div className="flex gap-2 items-center">
+                        <input type="color" value={newBadge.bg} onChange={(e) => setNewBadge({ ...newBadge, bg: e.target.value })} className="w-10 h-10 rounded border-0 bg-transparent cursor-pointer" />
+                        <input value={newBadge.bg} onChange={(e) => setNewBadge({ ...newBadge, bg: e.target.value })} className="flex-1 px-3 py-2 bg-white/[0.04] border border-white/[0.08] rounded-xl text-xs text-white font-mono" />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-xs text-white/40 mb-1">Logo or Emoji (Optional)</label>
+                      <input placeholder="Contoh: 🎨 atau https://..." value={newBadge.logo} onChange={(e) => setNewBadge({ ...newBadge, logo: e.target.value })} className="w-full px-3 py-2 bg-white/[0.04] border border-white/[0.08] rounded-xl text-xs text-white" />
+                    </div>
+                  </div>
+
+                  <button onClick={handleAddBadge} className="w-full py-2 bg-violet-600 hover:bg-violet-500 text-white font-bold rounded-xl text-xs">+ Add Badge</button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* PORTFOLIO LINKS */}
+          {activeSubTab === 'links' && (
+            <div className="space-y-6">
+              <h3 className="text-lg font-semibold text-white">Portfolio Social Anchors</h3>
+              
+              <div className="space-y-2">
+                {form.portfolio_links.map((link, idx) => (
+                  <div key={idx} className="flex items-center justify-between p-3 bg-white/[0.02] border border-white/[0.04] rounded-xl">
+                    <div>
+                      <span className="text-sm font-bold text-white">{link.label}</span>
+                      <span className="text-xs text-white/40 ml-3">{link.url}</span>
+                    </div>
+                    <button onClick={() => handleDeleteLink(idx)} className="p-1 bg-red-500/10 text-red-500 hover:bg-red-500/20 text-xs rounded-lg">🗑️</button>
+                  </div>
+                ))}
+              </div>
+
+              <div className="bg-white/[0.02] p-4 rounded-xl border border-white/[0.06] space-y-4">
+                <h4 className="text-sm font-semibold text-white">➕ Add Link</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <input placeholder="Label (LinkedIn, Instagram, dll)..." value={newLink.label} onChange={(e) => setNewLink({ ...newLink, label: e.target.value })} className="px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm text-white" />
+                  <input placeholder="URL (https://...)..." value={newLink.url} onChange={(e) => setNewLink({ ...newLink, url: e.target.value })} className="px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm text-white" />
+                </div>
+                <button onClick={handleAddLink} className="px-4 py-2 bg-violet-600 text-white rounded-lg hover:bg-violet-500 font-semibold text-xs">+ Add Link</button>
+              </div>
+            </div>
+          )}
+
+          {/* PERSONAL DETAILS */}
+          {activeSubTab === 'details' && (
+            <div className="space-y-5">
+              <h3 className="text-lg font-semibold text-white">Personal Contact Details</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">Age</label>
+                  <input value={form.details?.age || ''} onChange={(e) => setForm({ ...form, details: { ...form.details, age: e.target.value } })} className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50 transition-all" />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">Website</label>
+                  <input value={form.details?.website || ''} onChange={(e) => setForm({ ...form, details: { ...form.details, website: e.target.value } })} className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50 transition-all" />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">Primary Email (me@domain.id)</label>
+                  <input value={form.details?.email1 || ''} onChange={(e) => setForm({ ...form, details: { ...form.details, email1: e.target.value } })} className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50 transition-all" />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">Secondary Email (gmail)</label>
+                  <input value={form.details?.email2 || ''} onChange={(e) => setForm({ ...form, details: { ...form.details, email2: e.target.value } })} className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50 transition-all" />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">Phone / WhatsApp</label>
+                  <input value={form.details?.phone || ''} onChange={(e) => setForm({ ...form, details: { ...form.details, phone: e.target.value } })} className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50 transition-all" />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-white/50 mb-2 uppercase tracking-wider">Location / Country</label>
+                  <input value={form.details?.location || ''} onChange={(e) => setForm({ ...form, details: { ...form.details, location: e.target.value } })} className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-violet-500/50 transition-all" />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ACHIEVEMENTS */}
+          {activeSubTab === 'achievements' && (
+            <div className="space-y-6">
+              <h3 className="text-lg font-semibold text-white">Achievements & Awards</h3>
+              
+              <div className="space-y-2">
+                {form.achievements.map((ach, idx) => (
+                  <div key={idx} className="flex items-center justify-between p-3 bg-white/[0.02] border border-white/[0.04] rounded-xl">
+                    <span className="text-sm text-white/80 flex items-center gap-2">🏆 {ach}</span>
+                    <button onClick={() => handleDeleteAch(idx)} className="p-1 bg-red-500/10 text-red-500 hover:bg-red-500/20 text-xs rounded-lg">🗑️</button>
+                  </div>
+                ))}
+              </div>
+
+              <div className="bg-white/[0.02] p-4 rounded-xl border border-white/[0.06] space-y-4">
+                <h4 className="text-sm font-semibold text-white">➕ Add Achievement</h4>
+                <div className="flex gap-2">
+                  <input placeholder="Contoh: Grew Instagram followers from 500 to 8,000..." value={newAchievement} onChange={(e) => setNewAchievement(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddAch())} className="flex-1 px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm text-white" />
+                  <button onClick={handleAddAch} className="px-4 py-2.5 bg-violet-600 text-white rounded-xl text-xs font-semibold">+ Add</button>
+                </div>
+              </div>
+            </div>
+          )}
+
         </div>
       </div>
     </div>

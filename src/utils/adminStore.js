@@ -192,9 +192,44 @@ export const cvStore = {
 const DEFAULT_ABOUT = {
   name: 'Aufa Rafii Hadibrata',
   title: 'Creative Entrepreneur & Digital Strategist',
-  bio: 'Creative entrepreneur yang fokus di desain, streetwear, dan tren digital.',
-  skills: ['Graphic Design', 'Business Strategy', 'Digital Marketing', 'UI/UX', 'Streetwear Design', 'Web3 Art'],
+  bio: "My name is Aufa Rafii' Hadibrata, a self-taught business growth consultant and digital marketing strategist with 4+ years of experience creating modern, clean, and minimal brands that make a lasting impression.",
+  skills: ['Strategic Planning', 'Content Management', 'Facebook for Business', 'Digital Marketing', 'Graphic Design', 'Brand Development', 'Performance Marketing'],
   social: { instagram: '@aufapai', email: 'aufatea1@gmail.com' },
+  experience: [
+    { role: "Digital Strategist", company: "PT Bayarkilat Apps Indonesia", period: "June 2025 - Present", details: ["Developed performance-driven digital marketing campaigns.", "Built content strategy for multi-channel presence.", "Achieved 10% more conversion with Organic Social Media."] },
+    { role: "Business Development Manager", company: "Loekis.in", period: "June 2021 - Present", details: ["Developed business systems and growth strategies.", "Conducted market research and trend analysis.", "Initiated B2B discussions and partner negotiations."] },
+    { role: "Business Owner", company: "Zero Cost Shop", period: "Oct 2016 - June 2025", details: ["Oversaw online store operations on Tokopedia.", "Developed promotional strategies and campaigns.", "Analyzed store performance using analytics tools."] }
+  ],
+  education: [
+    { degree: "Institut Pertanian Bogor (IPB)", major: "Bachelor of Business Administration (2018 - 2025)", period: "2019 - 2024", school: "IPB University, Bogor" },
+    { degree: "SMK TARUNA TERPADU 1", major: "Multimedia (2016 - 2018)", period: "2014 - 2017", school: "SMK, Bogor" }
+  ],
+  details: {
+    age: "25 years",
+    website: "aufarafii.id",
+    email1: "me@aufarafii.id",
+    email2: "aufatea1@gmail.com",
+    phone: "+6287770050793",
+    location: "Indonesia"
+  },
+  portfolio_links: [
+    { label: "LinkedIn", url: "https://www.linkedin.com/in/aufa-hadibrata/" },
+    { label: "Instagram", url: "https://www.instagram.com/aufapai/" },
+    { label: "Tokopedia", url: "https://www.tokopedia.com/zerocostshop" }
+  ],
+  achievements: [
+    "Grew Instagram followers from 500 to 8,000 in <1 year",
+    "Best Student Nominee in IPB Entrepreneurship 2018",
+    "Successful Tokopedia store owner since 2016"
+  ],
+  section_order: ['profile', 'experience', 'skills', 'education', 'portfolio', 'details', 'achievements'],
+  custom_skills: [
+    { category: "Design Tools", items: ["Ai", "Ps", "Id", "Xd", "Cn"] },
+    { category: "Editing Tools", items: ["Ae", "Pr", "🎨"] },
+    { category: "Marketing", items: ["fb", "ig", "G", "TP"] },
+    { category: "Languages", items: ["ID", "GB"] }
+  ],
+  contact_menu_target: 'section'
 };
 
 export const aboutStore = {
@@ -205,6 +240,14 @@ export const aboutStore = {
         ...res.data,
         skills: Array.isArray(res.data.skills) ? res.data.skills : JSON.parse(res.data.skills || '[]'),
         social: typeof res.data.social === 'object' ? res.data.social : JSON.parse(res.data.social || '{}'),
+        experience: Array.isArray(res.data.experience) ? res.data.experience : JSON.parse(res.data.experience || '[]'),
+        education: Array.isArray(res.data.education) ? res.data.education : JSON.parse(res.data.education || '[]'),
+        details: typeof res.data.details === 'object' ? res.data.details : JSON.parse(res.data.details || '{}'),
+        portfolio_links: Array.isArray(res.data.portfolio_links) ? res.data.portfolio_links : JSON.parse(res.data.portfolio_links || '[]'),
+        achievements: Array.isArray(res.data.achievements) ? res.data.achievements : JSON.parse(res.data.achievements || '[]'),
+        section_order: Array.isArray(res.data.section_order) ? res.data.section_order : JSON.parse(res.data.section_order || '[]'),
+        custom_skills: Array.isArray(res.data.custom_skills) ? res.data.custom_skills : JSON.parse(res.data.custom_skills || '[]'),
+        contact_menu_target: res.data.contact_menu_target || 'section'
       };
     }
     return DEFAULT_ABOUT;

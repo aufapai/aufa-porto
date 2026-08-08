@@ -1,15 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { aboutStore } from '../../utils/adminStore';
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [contactTarget, setContactTarget] = useState('section');
 
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 20);
         };
         window.addEventListener('scroll', handleScroll);
+        
+        const fetchTarget = async () => {
+            try {
+                const data = await aboutStore.get();
+                if (data && data.contact_menu_target) {
+                    setContactTarget(data.contact_menu_target);
+                }
+            } catch (err) {
+                console.warn('Navbar failed to load contact config:', err);
+            }
+        };
+        fetchTarget();
+
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
     return (
@@ -56,10 +71,17 @@ const Navbar = () => {
                     </Link>
 
                     {/* Contact Link with logic to handle home/other pages */}
-                    <a href="/#contact" className="text-sm font-medium text-dark-muted hover:text-white transition-colors relative group">
-                        Contact
-                        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full" />
-                    </a>
+                    {contactTarget === 'page' ? (
+                        <Link to="/contact" className="text-sm font-medium text-dark-muted hover:text-white transition-colors relative group">
+                            Contact
+                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full" />
+                        </Link>
+                    ) : (
+                        <a href="/#contact" className="text-sm font-medium text-dark-muted hover:text-white transition-colors relative group">
+                            Contact
+                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full" />
+                        </a>
+                    )}
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -95,7 +117,12 @@ const Navbar = () => {
                             </div>
 
                             <Link to="/blog" className="text-base font-medium text-dark-muted hover:text-white transition-colors block" onClick={() => setIsMobileMenuOpen(false)}>Blog</Link>
-                            <a href="#contact" className="text-base font-medium text-dark-muted hover:text-white transition-colors block" onClick={() => setIsMobileMenuOpen(false)}>Contact</a>
+                            
+                            {contactTarget === 'page' ? (
+                                <Link to="/contact" className="text-base font-medium text-dark-muted hover:text-white transition-colors block" onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
+                            ) : (
+                                <a href="#contact" className="text-base font-medium text-dark-muted hover:text-white transition-colors block" onClick={() => setIsMobileMenuOpen(false)}>Contact</a>
+                            )}
                         </div>
                     </div>
                 )
