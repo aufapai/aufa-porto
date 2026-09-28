@@ -3,4 +3,5 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/aufarafi/public_html/
     - /bin/cp -rf dist/* $DEPLOYPATH
+    - /bin/cp -rf admin $DEPLOYPATH/
     - /bin/cp -f dist/.htaccess $DEPLOYPATH

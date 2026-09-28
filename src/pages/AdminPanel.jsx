@@ -415,7 +415,7 @@ const AboutTab = () => {
 
   // New item inputs
   const [skillInput, setSkillInput] = useState('');
-  const [newExp, setNewExp] = useState({ role: '', company: '', period: '', detailsText: '' });
+  const [newExp, setNewExp] = useState({ role: '', company: '', period: '', location: '', detailsText: '' });
   
   const [newEdu, setNewEdu] = useState({ degree: '', major: '', period: '', school: '' });
 
@@ -444,7 +444,7 @@ const AboutTab = () => {
         details: data.details || {},
         portfolio_links: data.portfolio_links || [],
         achievements: data.achievements || [],
-        section_order: data.section_order || ['profile', 'experience', 'skills', 'education', 'portfolio', 'details', 'achievements'],
+        section_order: data.section_order || ['profile', 'experience', 'education', 'skills', 'portfolio', 'details', 'achievements'],
         custom_skills: data.custom_skills || [],
         contact_menu_target: data.contact_menu_target || 'section'
       });
@@ -459,6 +459,14 @@ const AboutTab = () => {
     setTimeout(() => setSaved(false), 2000);
   };
 
+  const handleLoadLinkedIn = () => {
+    if (window.confirm('Muat data profil lengkap dari CV / LinkedIn (10 Pengalaman, IPB, Skills Badges, Kontak, dsb)?')) {
+      const preset = aboutStore.getLinkedInPreset();
+      setForm(preset);
+      alert('Data LinkedIn berhasil dimuat ke editor! Jangan lupa klik "Save Changes" untuk menyimpan ke database.');
+    }
+  };
+
   const addSkill = () => {
     if (skillInput.trim() && !form.skills.includes(skillInput.trim())) {
       setForm({ ...form, skills: [...form.skills, skillInput.trim()] });
@@ -470,9 +478,9 @@ const AboutTab = () => {
   const handleAddExp = () => {
     if (!newExp.role || !newExp.company) return alert('Role & Company are required');
     const details = newExp.detailsText.split('\n').map(d => d.trim()).filter(Boolean);
-    const item = { role: newExp.role, company: newExp.company, period: newExp.period, details };
+    const item = { role: newExp.role, company: newExp.company, period: newExp.period, location: newExp.location, details };
     setForm({ ...form, experience: [...form.experience, item] });
-    setNewExp({ role: '', company: '', period: '', detailsText: '' });
+    setNewExp({ role: '', company: '', period: '', location: '', detailsText: '' });
   };
 
   const handleDeleteExp = (idx) => {
@@ -608,9 +616,17 @@ const AboutTab = () => {
           <h2 className="text-2xl font-bold text-white">👤 About Me & CV Layout Editor</h2>
           <p className="text-xs text-white/40">Customize order, text, logos, badges, and behavior of /about page</p>
         </div>
-        <button onClick={handleSave} className={`px-5 py-2.5 rounded-xl font-semibold text-sm transition-all shadow-lg shrink-0 ${saved ? 'bg-emerald-600 text-white' : 'bg-gradient-to-r from-violet-600 to-cyan-600 text-white shadow-violet-500/25'}`}>
-          {saved ? '✅ Saved successfully!' : '💾 Save Changes'}
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <a href="/about" target="_blank" rel="noopener noreferrer" className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white/60 hover:text-white text-xs font-semibold">
+            👁️ Preview /about
+          </a>
+          <button onClick={handleLoadLinkedIn} className="px-4 py-2 rounded-xl bg-blue-600/30 border border-blue-500/40 text-blue-300 hover:bg-blue-600/50 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-md">
+            <span>📥</span> Load LinkedIn Preset
+          </button>
+          <button onClick={handleSave} className={`px-5 py-2 rounded-xl font-semibold text-xs sm:text-sm transition-all shadow-lg shrink-0 ${saved ? 'bg-emerald-600 text-white' : 'bg-gradient-to-r from-violet-600 to-cyan-600 text-white shadow-violet-500/25'}`}>
+            {saved ? '✅ Saved successfully!' : '💾 Save Changes'}
+          </button>
+        </div>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6">
@@ -739,7 +755,10 @@ const AboutTab = () => {
                   <div key={idx} className="p-4 bg-white/[0.02] border border-white/[0.04] rounded-xl flex items-start justify-between gap-4">
                     <div className="space-y-1 bg-transparent">
                       <h4 className="font-bold text-white">{exp.role}</h4>
-                      <p className="text-xs text-white/60">{exp.company} • {exp.period}</p>
+                      <p className="text-xs text-white/60">
+                        {exp.company} • {exp.period}
+                        {exp.location && <span className="text-violet-400 ml-1">• 📍 {exp.location}</span>}
+                      </p>
                       <ul className="text-xs text-white/40 pl-4 list-disc mt-2">
                         {exp.details.map((d, i) => <li key={i}>{d}</li>)}
                       </ul>
@@ -756,10 +775,13 @@ const AboutTab = () => {
               <div className="bg-white/[0.02] p-4 rounded-xl border border-white/[0.06] space-y-4">
                 <h4 className="text-sm font-semibold text-white">➕ Add Experience</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input placeholder="Job Role / Title..." value={newExp.role} onChange={(e) => setNewExp({ ...newExp, role: e.target.value })} className="px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm text-white" />
-                  <input placeholder="Company / Organization..." value={newExp.company} onChange={(e) => setNewExp({ ...newExp, company: e.target.value })} className="px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm text-white" />
+                  <input placeholder="Job Role / Title (contoh: Business Development Manager)..." value={newExp.role} onChange={(e) => setNewExp({ ...newExp, role: e.target.value })} className="px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm text-white" />
+                  <input placeholder="Company (contoh: Hots Trading)..." value={newExp.company} onChange={(e) => setNewExp({ ...newExp, company: e.target.value })} className="px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm text-white" />
                 </div>
-                <input placeholder="Period (e.g. 2021 - Present or June 2025)..." value={newExp.period} onChange={(e) => setNewExp({ ...newExp, period: e.target.value })} className="w-full px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm text-white" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <input placeholder="Period (contoh: January 2026 - Present)..." value={newExp.period} onChange={(e) => setNewExp({ ...newExp, period: e.target.value })} className="px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm text-white" />
+                  <input placeholder="Location (contoh: Kelurahan Penjaringan / Bogor)..." value={newExp.location} onChange={(e) => setNewExp({ ...newExp, location: e.target.value })} className="px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm text-white" />
+                </div>
                 <textarea rows={3} placeholder="Job description / details (Satu poin per baris)..." value={newExp.detailsText} onChange={(e) => setNewExp({ ...newExp, detailsText: e.target.value })} className="w-full px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm text-white resize-none" />
                 <button onClick={handleAddExp} className="px-4 py-2 bg-violet-600 text-white rounded-lg hover:bg-violet-500 font-semibold text-xs">+ Add Experience</button>
               </div>

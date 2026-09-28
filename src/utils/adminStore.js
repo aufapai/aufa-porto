@@ -188,65 +188,265 @@ export const cvStore = {
   },
 };
 
-// ─── ABOUT ME ───────────────────────────────────────
-const DEFAULT_ABOUT = {
-  name: 'Aufa Rafii Hadibrata',
-  title: 'Creative Entrepreneur & Digital Strategist',
-  bio: "My name is Aufa Rafii' Hadibrata, a self-taught business growth consultant and digital marketing strategist with 4+ years of experience creating modern, clean, and minimal brands that make a lasting impression.",
-  skills: ['Strategic Planning', 'Content Management', 'Facebook for Business', 'Digital Marketing', 'Graphic Design', 'Brand Development', 'Performance Marketing'],
-  social: { instagram: '@aufapai', email: 'aufatea1@gmail.com' },
+export const LINKEDIN_ABOUT_DATA = {
+  name: "Aufa Rafii' Hadibrata",
+  title: "Business Development @HOTs_Trading | Business Growth Consultant | Digital Marketing",
+  bio: "Hi, I’m Aufa Rafii Hadibrata (Pai), a business graduate from IPB University with hands-on experience in business development, digital marketing, and operational improvement.\n\nI specialize in helping businesses grow by building better systems — from strategy, market research, and digital execution to workflow optimization and performance tracking.\n\nMy background spans across content management, branding execution, growth strategy, and process improvement, which allows me to connect business goals with real execution on the ground.\n\nI’m particularly interested in Business Process Improvement, Digital Transformation, and AI/Automation tools to improve efficiency and scalability for SMEs and growing companies.\n\nCore strengths:\n• Business Development & Strategic Planning\n• Market Research & Competitor Analysis\n• Digital Marketing & Content Strategy\n• Workflow Optimization & System Building\n• Cross-functional Execution (Business x Creative x Tech)\n\nCurrently open to opportunities in Business Analyst, Business Development, Growth, or Digital Transformation roles.",
+  skills: [
+    "Business Development",
+    "Sales",
+    "Customer Relationship Management (CRM)",
+    "Digital Marketing",
+    "Growth Strategy",
+    "Workflow Optimization",
+    "Graphic Design",
+    "Business Process Improvement"
+  ],
+  social: {
+    instagram: "@aufapai",
+    email: "aufatea1@gmail.com",
+    linkedin: "https://www.linkedin.com/in/aufa-hadibrata/",
+    blog: "https://aufatea.my.id/",
+    linktree: "https://linktr.ee/aufarh"
+  },
   experience: [
-    { role: "Digital Strategist", company: "PT Bayarkilat Apps Indonesia", period: "June 2025 - Present", details: ["Developed performance-driven digital marketing campaigns.", "Built content strategy for multi-channel presence.", "Achieved 10% more conversion with Organic Social Media."] },
-    { role: "Business Development Manager", company: "Loekis.in", period: "June 2021 - Present", details: ["Developed business systems and growth strategies.", "Conducted market research and trend analysis.", "Initiated B2B discussions and partner negotiations."] },
-    { role: "Business Owner", company: "Zero Cost Shop", period: "Oct 2016 - June 2025", details: ["Oversaw online store operations on Tokopedia.", "Developed promotional strategies and campaigns.", "Analyzed store performance using analytics tools."] }
+    {
+      role: "Business Development Manager",
+      company: "Hots Trading",
+      period: "January 2026 - Present",
+      location: "Kelurahan Penjaringan",
+      details: [
+        "Research market trends and competitor movements.",
+        "Build partnerships with traders, communities, affiliates, and strategic partners.",
+        "Handle outreach, pitching, and deal negotiations.",
+        "Collaborate with marketing and product teams on growth initiatives.",
+        "Track performance metrics and optimize strategies based on data."
+      ]
+    },
+    {
+      role: "Business Growth Consultant",
+      company: "Freelance (Self employed)",
+      period: "January 2024 - July 2026",
+      location: "Kota Bogor, Jawa Barat, Indonesia",
+      details: [
+        "Help businesses identify growth opportunities through market research, customer analysis, and competitor benchmarking.",
+        "Design and execute data-driven growth strategies to increase revenue, customer acquisition, and market reach.",
+        "Advise founders and management teams on business models, pricing strategies, go-to-market plans, and process optimization.",
+        "Support partnership development and strategic collaborations.",
+        "Monitor key performance indicators (KPIs) and provide actionable recommendations based on performance insights."
+      ]
+    },
+    {
+      role: "Digital Strategist",
+      company: "PT Bayarkilat Apps Indonesia",
+      period: "June 2025 - December 2025",
+      location: "Kota Bogor, Jawa Barat, Indonesia",
+      details: [
+        "Developed and implemented performance-driven digital marketing campaigns across Meta Ads and Google Ads.",
+        "Built a cohesive content strategy for multi-channel presence (Instagram, Tiktok, Blog, WhatsApp Broadcast), improving brand awareness and organic engagement.",
+        "Conducted market and competitor analysis to fine-tune product positioning and user targeting.",
+        "Collaborated with cross-functional teams (design, tech, CS) to optimize user journey from ad to onboarding.",
+        "Introduced data dashboards and simple funnel tracking to monitor and improve campaign effectiveness.",
+        "Initiated user education content to reduce bounce rates and increase app conversion (1 content for youtube reach 1% conversion).",
+        "Make more 10% conversion sales with Organic Social Media, in 2 months."
+      ]
+    },
+    {
+      role: "Desainer Grafis",
+      company: "Freelance",
+      period: "January 2018 - June 2025",
+      location: "Bogor, West Java, Indonesia",
+      details: [
+        "Designed visual identities and brand logos tailored to client needs across diverse industries.",
+        "Created custom merchandise designs, including apparel, stickers, packaging, and promotional items.",
+        "Collaborated with clients to develop consistent visual branding and enhance brand recognition.",
+        "Delivered production-ready assets with attention to print specifications and scalability.",
+        "Managed end-to-end design process, from concept development to final execution, while maintaining brand consistency."
+      ]
+    },
+    {
+      role: "Business Owner",
+      company: "Zero Cost Shop",
+      period: "October 2016 - June 2025",
+      location: "Kota Bogor, Jawa Barat, Indonesia",
+      details: [
+        "Oversaw day-to-day operations of an online store on Tokopedia, including product listings, pricing, and descriptions.",
+        "Developed promotional strategies and discount campaigns to increase sales and product visibility.",
+        "Handled inventory management, shipping logistics, and customer service.",
+        "Analyzed store performance using Tokopedia's analytics tools and optimized product keywords for search ranking.",
+        "Designed promotional materials including thumbnails, banners, and campaign visuals."
+      ]
+    },
+    {
+      role: "Manajer Pengembangan Bisnis",
+      company: "Loekis.in",
+      period: "June 2021 - July 2024",
+      location: "Bogor",
+      details: [
+        "Developed business systems and growth strategies to support brand expansion.",
+        "Conducted market research and trend analysis to design targeted marketing strategies.",
+        "Initiated B2B discussions and negotiated with partners, vendors, and collaborators to drive business opportunities.",
+        "Created detailed customer segmentation and proposed frameworks for new product launches.",
+        "Designed and implemented operational SOPs to improve internal efficiency and workflow.",
+        "Collaborated with content, design, and production teams to align business goals with marketing execution."
+      ]
+    },
+    {
+      role: "Liaison Officer Pertukaran Mahasiswa Merdeka 2",
+      company: "Kampus Merdeka",
+      period: "August 2022 - December 2022",
+      location: "Bogor, West Java, Indonesia",
+      details: [
+        "Assisted inbound exchange students from various regions across Indonesia during their academic and cultural immersion at IPB University.",
+        "Coordinated academic schedules, student logistics, and communication with lecturers and university staff.",
+        "Acted as a bridge between students and university stakeholders to ensure smooth execution of both academic and extracurricular activities.",
+        "Supported cultural exchange initiatives, including batik workshops and local heritage exploration.",
+        "Compiled periodic reports and provided feedback for program improvement."
+      ]
+    },
+    {
+      role: "Content Manager",
+      company: "Puffin Store ID",
+      period: "June 2018 - March 2020",
+      location: "Bogor, West Java, Indonesia",
+      details: [
+        "Managed content distribution to online channels and social media platforms.",
+        "Used content management system to analyze user engagement and website traffic metrics.",
+        "Edited and sourced images and videos using Adobe Premiere and Adobe Photoshop.",
+        "Conceptualized, planned and executed original designs for Social Media."
+      ]
+    },
+    {
+      role: "Staff Intern",
+      company: "HepiPop",
+      period: "March 2018 - July 2018",
+      location: "Bogor, West Java, Indonesia",
+      details: [
+        "Supported brand merchandise operations and social media promotional campaigns."
+      ]
+    },
+    {
+      role: "Packaging Intern",
+      company: "CV. Multigrafika",
+      period: "August 2016 - October 2016",
+      location: "Bogor, West Java, Indonesia",
+      details: [
+        "Minimized waste and reduced volume of packaging materials used to prepare shipments.",
+        "Inspected incoming and outgoing shipments to verify accuracy and prevent errors.",
+        "Completed daily orders with expert picking and packing of shipments.",
+        "Reviewed orders by inspecting labeling, packaging and contents.",
+        "Measured product sizes, packaging equipment needed and packing options."
+      ]
+    }
   ],
   education: [
-    { degree: "Institut Pertanian Bogor (IPB)", major: "Bachelor of Business Administration (2018 - 2025)", period: "2019 - 2024", school: "IPB University, Bogor" },
-    { degree: "SMK TARUNA TERPADU 1", major: "Multimedia (2016 - 2018)", period: "2014 - 2017", school: "SMK, Bogor" }
+    {
+      degree: "Bachelor of Business Administration - BBA",
+      major: "Business/Commerce, General",
+      school: "Institut Pertanian Bogor (IPB)",
+      period: "2018 - January 2025"
+    },
+    {
+      degree: "SMK (Vocational High School)",
+      major: "Intermedia / Multimedia",
+      school: "SMK TARUNA TERPADU 1",
+      period: "2016 - 2018"
+    }
   ],
   details: {
     age: "25 years",
     website: "aufarafii.id",
-    email1: "me@aufarafii.id",
-    email2: "aufatea1@gmail.com",
+    email1: "aufatea1@gmail.com",
+    email2: "me@aufarafii.id",
     phone: "+6287770050793",
-    location: "Indonesia"
+    location: "Jakarta Metropolitan Area / Bogor, Indonesia"
   },
   portfolio_links: [
     { label: "LinkedIn", url: "https://www.linkedin.com/in/aufa-hadibrata/" },
+    { label: "Personal Linktree", url: "https://linktr.ee/aufarh" },
+    { label: "Blog", url: "https://aufatea.my.id/" },
     { label: "Instagram", url: "https://www.instagram.com/aufapai/" },
-    { label: "Tokopedia", url: "https://www.tokopedia.com/zerocostshop" }
+    { label: "Tokopedia (Zero Cost Shop)", url: "https://www.tokopedia.com/zerocostshop" }
   ],
   achievements: [
-    "Grew Instagram followers from 500 to 8,000 in <1 year",
-    "Best Student Nominee in IPB Entrepreneurship 2018",
-    "Successful Tokopedia store owner since 2016"
+    "Make more 10% conversion sales with Organic Social Media in 2 months at PT Bayarkilat Apps Indonesia",
+    "Educational YouTube video content reached 1% app conversion rate",
+    "Built and operated Zero Cost Shop on Tokopedia for 8+ years (2016-2025)",
+    "Grew Instagram brand reach from 500 to 8,000+ followers in <1 year",
+    "Liaison Officer Pertukaran Mahasiswa Merdeka 2 di IPB University"
   ],
-  section_order: ['profile', 'experience', 'skills', 'education', 'portfolio', 'details', 'achievements'],
+  section_order: ['profile', 'experience', 'education', 'skills', 'portfolio', 'details', 'achievements'],
   custom_skills: [
-    { category: "Design Tools", items: ["Ai", "Ps", "Id", "Xd", "Cn"] },
-    { category: "Editing Tools", items: ["Ae", "Pr", "🎨"] },
-    { category: "Marketing", items: ["fb", "ig", "G", "TP"] },
-    { category: "Languages", items: ["ID", "GB"] }
+    {
+      category: "Core Strengths",
+      items: [
+        { name: "Sales & CRM", text: "CRM", bg: "#0D9488" },
+        { name: "Business Development", text: "BD", bg: "#7C3AED" },
+        { name: "Growth Strategy", text: "GS", bg: "#2563EB" },
+        { name: "Workflow Optimization", text: "WO", bg: "#EA580C" }
+      ]
+    },
+    {
+      category: "Marketing & Growth",
+      items: [
+        { name: "Meta Ads (FB/IG)", text: "Meta", bg: "#0081FB" },
+        { name: "Google Ads", text: "GAds", bg: "#4285F4" },
+        { name: "TikTok Marketing", text: "TT", bg: "#010101" },
+        { name: "WhatsApp Marketing", text: "WA", bg: "#25D366" },
+        { name: "Tokopedia Marketplace", text: "TP", bg: "#03AC0E" }
+      ]
+    },
+    {
+      category: "Design & Multimedia",
+      items: [
+        { name: "Adobe Photoshop", text: "Ps", bg: "#31A8FF" },
+        { name: "Adobe Illustrator", text: "Ai", bg: "#FF9A00" },
+        { name: "Adobe InDesign", text: "Id", bg: "#FF3366" },
+        { name: "Adobe Premiere Pro", text: "Pr", bg: "#9999FF" },
+        { name: "Adobe After Effects", text: "Ae", bg: "#9999FF" },
+        { name: "Canva", text: "Cn", bg: "#00D4AA" }
+      ]
+    },
+    {
+      category: "Languages",
+      items: [
+        { name: "Indonesian (Native or Bilingual)", text: "ID", bg: "#DC2626" },
+        { name: "English (Professional Working)", text: "EN", bg: "#1D4ED8" }
+      ]
+    }
   ],
   contact_menu_target: 'section'
 };
+
+const DEFAULT_ABOUT = LINKEDIN_ABOUT_DATA;
 
 export const aboutStore = {
   async get() {
     const res = await apiFetch(API.about);
     if (res.ok && res.data && res.data.name) {
+      const parsedExperience = Array.isArray(res.data.experience) ? res.data.experience : JSON.parse(res.data.experience || '[]');
+      const parsedEducation = Array.isArray(res.data.education) ? res.data.education : JSON.parse(res.data.education || '[]');
+      const parsedDetails = typeof res.data.details === 'object' ? res.data.details : JSON.parse(res.data.details || '{}');
+      const parsedLinks = Array.isArray(res.data.portfolio_links) ? res.data.portfolio_links : JSON.parse(res.data.portfolio_links || '[]');
+      const parsedOrder = Array.isArray(res.data.section_order) ? res.data.section_order : JSON.parse(res.data.section_order || '[]');
+      const parsedCustomSkills = Array.isArray(res.data.custom_skills) ? res.data.custom_skills : JSON.parse(res.data.custom_skills || '[]');
+      const parsedAchievements = Array.isArray(res.data.achievements) ? res.data.achievements : JSON.parse(res.data.achievements || '[]');
+      const parsedSkills = Array.isArray(res.data.skills) ? res.data.skills : JSON.parse(res.data.skills || '[]');
+
       return {
         ...res.data,
-        skills: Array.isArray(res.data.skills) ? res.data.skills : JSON.parse(res.data.skills || '[]'),
+        name: res.data.name || LINKEDIN_ABOUT_DATA.name,
+        title: res.data.title || LINKEDIN_ABOUT_DATA.title,
+        bio: res.data.bio || LINKEDIN_ABOUT_DATA.bio,
+        skills: parsedSkills.length > 0 ? parsedSkills : LINKEDIN_ABOUT_DATA.skills,
         social: typeof res.data.social === 'object' ? res.data.social : JSON.parse(res.data.social || '{}'),
-        experience: Array.isArray(res.data.experience) ? res.data.experience : JSON.parse(res.data.experience || '[]'),
-        education: Array.isArray(res.data.education) ? res.data.education : JSON.parse(res.data.education || '[]'),
-        details: typeof res.data.details === 'object' ? res.data.details : JSON.parse(res.data.details || '{}'),
-        portfolio_links: Array.isArray(res.data.portfolio_links) ? res.data.portfolio_links : JSON.parse(res.data.portfolio_links || '[]'),
-        achievements: Array.isArray(res.data.achievements) ? res.data.achievements : JSON.parse(res.data.achievements || '[]'),
-        section_order: Array.isArray(res.data.section_order) ? res.data.section_order : JSON.parse(res.data.section_order || '[]'),
-        custom_skills: Array.isArray(res.data.custom_skills) ? res.data.custom_skills : JSON.parse(res.data.custom_skills || '[]'),
+        experience: parsedExperience.length > 0 ? parsedExperience : LINKEDIN_ABOUT_DATA.experience,
+        education: parsedEducation.length > 0 ? parsedEducation : LINKEDIN_ABOUT_DATA.education,
+        details: Object.keys(parsedDetails).length > 0 ? parsedDetails : LINKEDIN_ABOUT_DATA.details,
+        portfolio_links: parsedLinks.length > 0 ? parsedLinks : LINKEDIN_ABOUT_DATA.portfolio_links,
+        achievements: parsedAchievements.length > 0 ? parsedAchievements : LINKEDIN_ABOUT_DATA.achievements,
+        section_order: parsedOrder.length > 0 ? parsedOrder : LINKEDIN_ABOUT_DATA.section_order,
+        custom_skills: parsedCustomSkills.length > 0 ? parsedCustomSkills : LINKEDIN_ABOUT_DATA.custom_skills,
         contact_menu_target: res.data.contact_menu_target || 'section'
       };
     }
@@ -257,6 +457,10 @@ export const aboutStore = {
     const res = await apiFetch(API.about, 'PUT', data);
     return res.ok;
   },
+
+  getLinkedInPreset() {
+    return JSON.parse(JSON.stringify(LINKEDIN_ABOUT_DATA));
+  }
 };
 
 // ─── TRAFFIC ANALYTICS ──────────────────────────────
