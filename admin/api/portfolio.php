@@ -15,8 +15,8 @@ $db = Database::getInstance()->getConnection();
 // Public: Get projects (optionally by category or id)
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (!empty($_GET['id'])) {
-        $stmt = $db->prepare("SELECT * FROM portfolio_projects WHERE id = ?");
-        $stmt->execute([$_GET['id']]);
+        $stmt = $db->prepare("SELECT * FROM portfolio_projects WHERE id = ? OR slug = ?");
+        $stmt->execute([$_GET['id'], $_GET['id']]);
         $project = $stmt->fetch();
         if ($project) {
             jsonResponse($project);

@@ -54,7 +54,13 @@ INSERT INTO `blog_posts` (`slug`, `title`, `category`, `excerpt`, `content`, `co
 ('cari-duit', '"Bagaimana Cara Cari Duit di Internet": A 2010 Story', 'Personal Journey',
 'Hal yang pertama kali gw cari di internet adalah "Bagaimana Cara Cari Duit di Internet". Di era 2010 warnet Peanut.net.',
 'Hal yang pertama kali gw cari di internet adalah "Bagaimana Cara Cari Duit di Internet". Di era 2010 warnet Peanut.net, speed 1mbps, dan awal mula mengenal dunia digital.\n\nDari warnet ke marketplace, dari marketplace ke brand sendiri. Perjalanan yang panjang tapi worth it.',
-'', 'Aufa Rafii', '3 min read', 1, '2025-12-20 00:00:00');
+'', 'Aufa Rafii', '3 min read', 1, '2025-12-20 00:00:00'),
+
+('sistem-dan-proyek', 'Implementasi Sistem & Transformasi Alur Kerja Proyek Nyata: Dari Edukasi, PWA AI, hingga Enterprise', 'Business Transformation',
+'Rangkuman studi kasus nyata: SPMB SMP PGRI 12, sistem penjadwalan & operasional Lare Music School (hemat 1 minggu ke 3 hari), PWA Survival.ID, audit dataset hotel bintang 5, serta branding Sambalin Aza & StarTech Enterprise.',
+'Sebagai praktisi Business Development dan Process Improvement, membangun sistem bukan sekadar menulis baris kode atau membuat tampilan visual yang estetik. Kunci utamanya adalah bagaimana teknologi dan alur operasional dapat memangkas inefisiensi, mengeliminasi human error, dan mempercepat ritme bisnis.\n\n## 1. Pilot Sistem SPMB SMP PGRI 12 (Debug & Ongoing Testing)\n- Status: Fase Uji Debug Internal & Ongoing Process Enhancement.\n- Konteks: Sistem Penerimaan Murid Baru (SPMB) berbasis web mandiri.\n- Metrik: Mengurangi waktu verifikasi calon siswa dari 5 hari menjadi hitungan jam.\n\n## 2. Multi-Building Scheduling Lare Music School (Depok & Kota Wisata)\n- Status: Prototyping Disetujui & Diterima Klien.\n- Konteks: Penjadwalan tutor dan studio kedap suara di dua cabang utama.\n- Solusi: Matriks penjadwalan dinamis terpusat dengan filter lokasi dan buffer waktu transit tutor.\n\n## 3. Optimasi Workflow Operasional Lare Music: Pangkas Waktu 1 Minggu jadi 3 Hari\n- Status: Berhasil Diimplementasikan.\n- Hasil: Waktu penyelesaian administrasi bulanan terpangkas drastis dari 1 minggu (7 hari) menjadi hanya 3 hari.\n\n## 4. Survival.ID: AI Studio & Google Workspace Connected PWA\n- Status: Live Prototype / Demo Analisis Personal.\n- Konteks: PWA terhubung dengan Google AI Studio (Gemini) dan Google Workspace.\n\n## 5. Audit & Pembersihan Dataset Sertifikasi 600+ Hotel Bintang 5\n- Status: Selesai / Terverifikasi.\n- Hasil: Waktu pengerjaan dipangkas dari 2 minggu lebih menjadi hanya 3 hari.\n\n## 6. Branding & SOP Sambalin Aza (Khas Sunda) vs. Modul Enterprise StarTech\n- Sambalin Aza: Identitas visual khas Sunda & standardisasi SOP resep sambal terasi matang & geprek.\n- StarTech: Corporate branding modern, technical sales copywriting B2B, dan modul visual enterprise.',
+'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
+'Aufa Rafii', '7 min read', 1, '2026-09-28 00:00:00');
 
 -- ─── CV DATA TABLE ──────────────────────────────────
 CREATE TABLE IF NOT EXISTS `cv_data` (
@@ -134,6 +140,7 @@ CREATE TABLE IF NOT EXISTS `contact_messages` (
 -- ─── PORTFOLIO PROJECTS TABLE ────────────────────────
 CREATE TABLE IF NOT EXISTS `portfolio_projects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `slug` varchar(255) DEFAULT NULL,
   `title` varchar(500) NOT NULL,
   `category` varchar(100) NOT NULL,
   `image_url` varchar(1000) DEFAULT '',
@@ -142,16 +149,23 @@ CREATE TABLE IF NOT EXISTS `portfolio_projects` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `slug` (`slug`),
   KEY `idx_category` (`category`),
   KEY `idx_created` (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Insert sample portfolio data
-INSERT INTO `portfolio_projects` (`title`, `category`, `image_url`, `description`, `external_link`) VALUES
-('Brand Identity Refresh', 'graphic-design', 'https://images.pexels.com/photos/1749303/pexels-photo-1749303.jpeg', 'Membuat ulang identitas visual untuk brand ritel modern.', ''),
-('Social Media Campaign Q3', 'digital-marketing', 'https://images.pexels.com/photos/2679501/pexels-photo-2679501.jpeg', 'Kampanye FB Ads scale up dengan ROAS 4.5x.', ''),
-('Fintech App Interface', 'ui-ux', 'https://images.pexels.com/photos/196645/pexels-photo-196645.jpeg', 'Desain UI/UX untuk aplikasi pembayaran digital B2B.', ''),
-('Zero Cost Shop Expansion', 'business', 'https://images.pexels.com/photos/936137/pexels-photo-936137.jpeg', 'Strategi ekspansi operasional ke gudang baru.', '');
+INSERT INTO `portfolio_projects` (`slug`, `title`, `category`, `image_url`, `description`, `external_link`) VALUES
+('spmb-pgri-12', 'Sistem SPMB Pilot SMP PGRI 12', 'business', 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1000&q=80', 'Pengembangan dan uji debug sistem SPMB berbasis web terpusat untuk SMP PGRI 12. Mengotomatisasi alur pendaftaran, upload berkas, dan validasi data calon siswa dengan verifikasi instan.\n\nStatus: Tahap Uji Debug & Ongoing Development.', '/blog/sistem-dan-proyek'),
+('penjadwalan-lare-music', 'Sistem Penjadwalan Multi-Cabang Lare Music School', 'business', 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1000&q=80', 'Perancangan matriks penjadwalan studio musik multi-cabang (Depok & Kota Wisata Cibubur). Menghilangkan risiko tabrakan jadwal tutor lintas cabang dan meningkatkan utilisasi ruangan studio.\n\nStatus: Prototype disetujui & diterima klien.', '/blog/sistem-dan-proyek'),
+('workflow-lare-music', 'Optimasi Alur Kerja & Administrasi Lare Music', 'business', 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1000&q=80', 'Restrukturisasi alur verifikasi presensi, honor instruktur, dan invoice wali murid. Menghemat waktu administrasi bulanan dari sebelumnya 1 minggu penuh menjadi hanya 3 hari kerja (efisiensi >57%).\n\nStatus: Terimplementasi.', '/blog/sistem-dan-proyek'),
+('survival-id', 'Survival.ID - AI Studio & Google Workspace PWA', 'business', 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1000&q=80', 'Aplikasi demo personal berbasis Progressive Web App (PWA) yang terhubung dengan Google AI Studio (Gemini) dan Google Workspace API untuk audit cepat strategi bisnis dan otomatisasi catatan cloud.\n\nStatus: Live Interactive Demo.', '/blog/sistem-dan-proyek'),
+('dataset-hotel-bintang-5', 'Audit & Pembersihan Dataset Sertifikasi Hotel Bintang 5', 'business', 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=80', 'Proyek audit dan pembersihan 600+ baris data sertifikasi staf & fasilitas hotel bintang 5. Memangkas estimasi pengerjaan dari 2 minggu lebih menjadi hanya 3 hari berkat pipeline regex dan otomatisasi validasi.\n\nStatus: Selesai dengan akurasi 100%.', '/blog/sistem-dan-proyek'),
+('sambalin-aza', 'Sambalin Aza - Culinary Branding & Recipe SOP', 'business', 'https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=1000&q=80', 'Branding kuliner khas Sunda terpisah yang mencakup identitas visual kemasan, storytelling kearifan lokal, serta standarisasi SOP produksi resep sambal terasi matang & geprek.\n\nStatus: Brand Identity & Kitchen SOP Siap Skala.', '/blog/sistem-dan-proyek'),
+('startech-enterprise', 'StarTech - Enterprise Copywriting & AI Visual Modules', 'business', 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80', 'Modul sistem enterprise dan copywriting B2B untuk lini software StarTech. Mengemas arsitektur teknis rumit ke dalam visual UI modern yang siap dipresentasikan kepada C-Level eksekutif.\n\nStatus: Enterprise Design & Copy System.', '/blog/sistem-dan-proyek'),
+('brand-refresh', 'Brand Identity Refresh', 'graphic-design', 'https://images.pexels.com/photos/1749303/pexels-photo-1749303.jpeg', 'Membuat ulang identitas visual untuk brand ritel modern.', ''),
+('social-media-q3', 'Social Media Campaign Q3', 'digital-marketing', 'https://images.pexels.com/photos/2679501/pexels-photo-2679501.jpeg', 'Kampanye FB Ads scale up dengan ROAS 4.5x.', ''),
+('fintech-app', 'Fintech App Interface', 'ui-ux', 'https://images.pexels.com/photos/196645/pexels-photo-196645.jpeg', 'Desain UI/UX untuk aplikasi pembayaran digital B2B.', '');
 
 -- ─── SESSIONS TABLE ─────────────────────────────────
 CREATE TABLE IF NOT EXISTS `admin_sessions` (
